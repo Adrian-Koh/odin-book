@@ -2,16 +2,24 @@ const passport = require("passport");
 const GitHubStrategy = require("passport-github2").Strategy;
 const usersQueries = require("../db/usersQueries");
 
-const verifyCallback = (accessToken, refreshToken, profile, done) => {
-  const avatarUrl =
-    (profile.photos && profile.photos.length > 0) ?? profile.photos[0].value;
-  usersQueries.addUserGithub(
-    profile.id,
-    profile.emails[0].value,
-    profile.displayName,
-    avatarUrl
-  );
-  console.log("Profile: " + JSON.stringify(profile));
+const verifyCallback = async (accessToken, refreshToken, profile, done) => {
+  const email = profile.emails[0].value;
+  const user = usersQueries.getUserByEmail(email);
+  if (user) {
+    return done(null, user);
+  } else {
+    const avatarUrl =
+      profile.photos && profile.photos.length > 0
+        ? profile.photos[0].value
+        : null;
+    const createdUser = await usersQueries.addUserGithub(
+      profile.id,
+      email,
+      profile.displayName,
+      avatarUrl
+    );
+    return done(null, createdUser);
+  }
 };
 
 const strategy = new GitHubStrategy(
