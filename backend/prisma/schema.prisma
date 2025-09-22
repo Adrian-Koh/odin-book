@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LoginMethod {
+  EMAIL
+  GITHUB
+}
+
+model User {
+  id                Int           @id @default(autoincrement())
+  displayName       String
+  loginMethod       LoginMethod
+  email             String        @unique
+  githubId          String?       @unique
+  passwordHash      String?
+  avatarUrl         String?
+  posts             Post[]
+  postsLiked        PostLike[]
+  comments          Comment[]
+  following         Follow[]      @relation("Following")
+  followers         Follow[]      @relation("Follower")
+}
+
+model Post {
+  id                Int           @id @default(autoincrement())
+  author            User          @relation(fields: [authorId], references: [id])
+  authorId          Int
+  likes             PostLike[]
+  caption           String
+  photoUrl          String?
+  comments          Comment[]
+}
+
+model Comment {
+  id                Int           @id @default(autoincrement())
+  author            User          @relation(fields: [authorId], references: [id])
+  authorId          Int
+  post              Post          @relation(fields: [postId], references: [id])
+  postId            Int
+  text              String
+}
+
+model PostLike {
+  post              Post          @relation(fields: [postId], references: [id])
+  postId            Int
+  likedBy           User          @relation(fields: [likedById], references: [id])
+  likedById         Int
+  
+  @@id([postId, likedById])
+}
+
+model Follow {
+  following         User          @relation("Following", fields: [followingId], references: [id])
+  followingId       Int
+  follower          User          @relation("Follower", fields: [followerId], references: [id])
+  followerId        Int
+
+  @@id([followingId, followerId])
+}
