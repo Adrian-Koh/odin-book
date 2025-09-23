@@ -5,6 +5,7 @@ const multer = require("multer");
 const verifyToken = require("../utils/jwtUtils");
 const upload = multer({ storage: multer.memoryStorage() });
 
+postsRouter.get("/", verifyToken, postsController.getFollowingPosts);
 postsRouter.post(
   "/",
   verifyToken,

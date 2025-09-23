@@ -5,10 +5,24 @@ const createPost = async (authorId, caption, photoUrl = null) => {
     data: {
       caption,
       photoUrl,
-      authorId,
+      authorId: Number(authorId),
     },
   });
   return createdPost;
 };
 
-module.exports = { createPost };
+const getUsersPosts = async (followingUserIds) => {
+  const posts = [];
+  for (const userid of followingUserIds) {
+    const userPosts = await prisma.post.findMany({
+      where: {
+        authorId: Number(userid),
+      },
+    });
+    userPosts.forEach((post) => posts.push(post));
+  }
+  posts.sort((a, b) => a.id - b.id);
+  return posts;
+};
+
+module.exports = { createPost, getUsersPosts };

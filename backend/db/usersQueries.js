@@ -27,11 +27,25 @@ const getUserByEmail = async (email) => {
 
 const getUserById = async (userid) => {
   const foundUser = await prisma.user.findUnique({
-    where: { id: userid },
+    where: { id: Number(userid) },
   });
   return foundUser;
 };
 
+const getUserFollowing = async (userid) => {
+  const followingUsers = await prisma.follow.findMany({
+    where: {
+      followerId: Number(userid),
+    },
+  });
+  return followingUsers;
+};
+
 const addUserEmail = () => {};
 
-module.exports = { addUserGithub, getUserByEmail, getUserById };
+module.exports = {
+  addUserGithub,
+  getUserByEmail,
+  getUserFollowing,
+  getUserById,
+};
