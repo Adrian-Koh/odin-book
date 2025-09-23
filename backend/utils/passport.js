@@ -3,22 +3,26 @@ const GitHubStrategy = require("passport-github2").Strategy;
 const usersQueries = require("../db/usersQueries");
 
 const verifyCallback = async (accessToken, refreshToken, profile, done) => {
-  const email = profile.emails[0].value;
-  const user = usersQueries.getUserByEmail(email);
-  if (user) {
-    return done(null, user);
-  } else {
-    const avatarUrl =
-      profile.photos && profile.photos.length > 0
-        ? profile.photos[0].value
-        : null;
-    const createdUser = await usersQueries.addUserGithub(
-      profile.id,
-      email,
-      profile.displayName,
-      avatarUrl
-    );
-    return done(null, createdUser);
+  try {
+    const email = profile.emails[0].value;
+    const user = await usersQueries.getUserByEmail(email);
+    if (user) {
+      return done(null, user);
+    } else {
+      const avatarUrl =
+        profile.photos && profile.photos.length > 0
+          ? profile.photos[0].value
+          : null;
+      const createdUser = await usersQueries.addUserGithub(
+        profile.id,
+        email,
+        profile.displayName,
+        avatarUrl
+      );
+      return done(null, createdUser);
+    }
+  } catch (err) {
+    return done(err);
   }
 };
 
@@ -33,9 +37,12 @@ const strategy = new GitHubStrategy(
 passport.use(strategy);
 
 passport.serializeUser(function (user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
-passport.deserializeUser(function (obj, done) {
-  done(null, obj);
+passport.deserializeUser(function (userid, done) {
+  usersQueries
+    .getUserById(userid)
+    .then((user) => done(null, user))
+    .catch((err) => done(err));
 });

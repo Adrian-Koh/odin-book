@@ -1,6 +1,6 @@
 const prisma = require("./prismaClient");
 
-const createPost = async (caption, authorId, photoUrl = null) => {
+const createPost = async (authorId, caption, photoUrl = null) => {
   const createdPost = await prisma.post.create({
     data: {
       caption,

@@ -1,13 +1,13 @@
 const { Router } = require("express");
 const postsRouter = Router();
 const postsController = require("../controllers/postsController");
-const { isAuthenticated } = require("../utils/authMiddleware");
 const multer = require("multer");
+const verifyToken = require("../utils/jwtUtils");
 const upload = multer({ storage: multer.memoryStorage() });
 
 postsRouter.post(
   "/",
-  isAuthenticated,
+  verifyToken,
   upload.single("file"),
   postsController.createPost
 );

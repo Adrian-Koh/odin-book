@@ -5,4 +5,9 @@ const getAllUsers = async () => {
   console.log("All users: " + JSON.stringify(users));
 };
 
-getAllUsers();
+const getAllPosts = async () => {
+  const posts = await prisma.post.findMany();
+  console.log("All posts: " + JSON.stringify(posts));
+};
+
+getAllPosts();
