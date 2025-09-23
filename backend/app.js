@@ -26,7 +26,7 @@ app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
-// app.use("/posts", commentsRouter);
+app.use("/posts", commentsRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).json({ status: "error", message: "Error: " + err.message });
