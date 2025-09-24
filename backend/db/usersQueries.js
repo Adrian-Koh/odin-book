@@ -18,6 +18,19 @@ const addUserGithub = async (
   return createdUser;
 };
 
+const addUserEmail = async (email, passwordHash, name, avatarUrl = null) => {
+  const user = await prisma.user.create({
+    data: {
+      loginMethod: "EMAIL",
+      email,
+      passwordHash,
+      displayName: name,
+      avatarUrl,
+    },
+  });
+  return user;
+};
+
 const getUserByEmail = async (email) => {
   const foundUser = await prisma.user.findUnique({
     where: { email },
@@ -41,11 +54,10 @@ const getUserFollowing = async (userid) => {
   return followingUsers;
 };
 
-const addUserEmail = () => {};
-
 module.exports = {
   addUserGithub,
+  addUserEmail,
   getUserByEmail,
-  getUserFollowing,
   getUserById,
+  getUserFollowing,
 };

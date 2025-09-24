@@ -16,6 +16,7 @@ authRouter.get(
   "/github/callback",
   passport.authenticate("github", {
     session: false,
+    successRedirect: "/",
     failureRedirect: "/login",
   }),
   function (req, res, next) {

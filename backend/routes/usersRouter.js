@@ -1,8 +1,10 @@
 const { Router } = require("express");
 const usersRouter = Router();
 const usersController = require("../controllers/usersController");
-const verifyToken = require("../utils/jwtUtils");
-const passport = require("passport");
-const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
+
+usersRouter.post("/login", usersController.loginPost);
+usersRouter.post("/signup", upload.single("file"), usersController.signupPost);
 
 module.exports = usersRouter;
