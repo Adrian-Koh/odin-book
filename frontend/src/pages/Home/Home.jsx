@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { Error } from "../../components/Error/Error";
+import { UsersList } from "../../components/UsersList/UsersList";
 
 export default function Home() {
   const [error, setError] = useState("");
@@ -10,6 +11,7 @@ export default function Home() {
 
   return (
     <div className={styles.home}>
+      <Error error={error} setError={setError} className={styles.error} />
       <div className={styles.navBar}>
         <nav className={styles.navLinks}>
           <Link to="/">Home</Link>
@@ -21,10 +23,10 @@ export default function Home() {
           )}
         </nav>
       </div>
-      <Error error={error} setError={setError} />
       <div className={styles.container}>
         <Outlet context={{ setUser, setError }}></Outlet>
       </div>
+      <UsersList className={styles.usersList} />
     </div>
   );
 }

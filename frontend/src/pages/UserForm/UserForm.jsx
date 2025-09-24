@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./UserForm.module.css";
-import { submitSignup, submitLogin } from "../../utils/accountUtils";
+import { submitSignupEmail, submitLoginEmail } from "../../api/authentication";
 import { getUserFromToken } from "../../utils/tokenUtils";
 import { Error } from "../../components/Error/Error";
 
@@ -21,7 +21,7 @@ const UserForm = ({ action }) => {
 
     if (action === "signup") {
       setLoading(true);
-      submitSignup(email, password, name, file)
+      submitSignupEmail(email, password, name, file)
         .then(() => {
           setLoading(false);
           navigate("/login");
@@ -32,7 +32,7 @@ const UserForm = ({ action }) => {
         });
     } else if (action === "login") {
       setLoading(true);
-      submitLogin(email, password)
+      submitLoginEmail(email, password)
         .then(() => {
           setLoading(false);
           const user = getUserFromToken();
@@ -99,10 +99,13 @@ const UserForm = ({ action }) => {
             ) : null}
             <input type="submit" className={styles.submit} />
           </form>
-          <button className={styles.githubBtn}>
+          <a
+            className={styles.githubLink}
+            href="http://localhost:8000/auth/github"
+          >
             <img src="/github.svg" alt="Github" className={styles.githubIcon} />
             {title} with GitHub
-          </button>
+          </a>
         </div>
       )}
       <Error error={error} setError={setError} />

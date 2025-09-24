@@ -24,7 +24,6 @@
 
 .inputField {
   border-radius: 5px;
-  border: none;
   padding: 5px;
 }
 
@@ -32,10 +31,18 @@
   text-align: center;
 }
 
-.githubBtn {
+.githubLink {
   display: flex;
   align-items: center;
+  text-decoration: none;
   gap: 5px;
+  border: solid 2px black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.githubLink:visited {
+  color: inherit;
 }
 
 .githubIcon {
