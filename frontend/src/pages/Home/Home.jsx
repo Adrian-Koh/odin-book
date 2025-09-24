@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
+import { Error } from "../../components/Error/Error";
 
 export default function Home() {
   const [error, setError] = useState("");
@@ -20,16 +21,9 @@ export default function Home() {
           )}
         </nav>
       </div>
-      {error ? (
-        <div className={styles.errorPanel}>
-          {error}{" "}
-          <button className={styles.dismissError} onClick={() => setError("")}>
-            Dismiss
-          </button>
-        </div>
-      ) : null}
+      <Error error={error} setError={setError} />
       <div className={styles.container}>
-        <Outlet context={{ setError }}></Outlet>
+        <Outlet context={{ setUser, setError }}></Outlet>
       </div>
     </div>
   );
