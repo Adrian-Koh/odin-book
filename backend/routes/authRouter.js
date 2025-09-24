@@ -2,6 +2,7 @@ const { Router } = require("express");
 const authRouter = Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const REDIRECT_URL = "http://localhost:5173";
 
 authRouter.get(
   "/github",
@@ -16,7 +17,6 @@ authRouter.get(
   "/github/callback",
   passport.authenticate("github", {
     session: false,
-    successRedirect: "/",
     failureRedirect: "/login",
   }),
   function (req, res, next) {
@@ -28,7 +28,7 @@ authRouter.get(
         if (err) {
           return next(err);
         }
-        res.json({ token, message: "login success" });
+        res.redirect(`${REDIRECT_URL}?token=${token}`);
       }
     );
   }
