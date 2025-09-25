@@ -18,6 +18,16 @@ const getUsersPosts = async (followingUserIds) => {
       where: {
         authorId: Number(userid),
       },
+      include: {
+        author: {
+          select: {
+            id: true,
+            email: true,
+            displayName: true,
+            avatarUrl: true,
+          },
+        },
+      },
     });
     userPosts.forEach((post) => posts.push(post));
   }
