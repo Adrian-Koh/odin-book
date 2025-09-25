@@ -14,3 +14,20 @@ export const getPosts = async () => {
 
   return parsed.posts;
 };
+
+export const togglePostLike = async (postId, like) => {
+  const link = BACKEND_DOMAIN + "/" + postId + "/like";
+  const method = like ? "POST" : "DELETE";
+  const response = await fetch(link, {
+    headers: getTokenHeader(),
+    method: method,
+  });
+  const parsed = await response.json();
+  console.log(
+    "parsed response from toggle post like: " + JSON.stringify(parsed)
+  );
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+};

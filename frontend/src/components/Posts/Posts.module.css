@@ -43,3 +43,21 @@
   grid-column: 2 / 3;
   grid-row: 2 / 3;
 }
+
+.likes,
+.comments {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.liked {
+  filter: invert(20%) sepia(55%) saturate(7240%) hue-rotate(354deg)
+    brightness(93%) contrast(123%);
+}
+
+.likeIcon,
+.commentIcon {
+  height: 25px;
+  width: auto;
+}

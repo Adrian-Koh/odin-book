@@ -45,7 +45,7 @@ export default function Home() {
         </nav>
       </div>
       <div className={styles.container}>
-        <Outlet context={{ setUser, setError }}></Outlet>
+        <Outlet context={{ user, setUser, setError }}></Outlet>
       </div>
       <UsersList className={styles.usersList} />
     </div>
