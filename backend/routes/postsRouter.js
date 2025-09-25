@@ -12,5 +12,7 @@ postsRouter.post(
   upload.single("file"),
   postsController.createPost
 );
+postsRouter.post("/:postId/like", verifyToken, postsController.likePost);
+postsRouter.delete("/:postId/like", verifyToken, postsController.unlikePost);
 
 module.exports = postsRouter;

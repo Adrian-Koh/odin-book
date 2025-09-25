@@ -6,7 +6,11 @@ const getAllUsers = async () => {
 };
 
 const getAllPosts = async () => {
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany({
+    include: {
+      likes: true,
+    },
+  });
   console.log("All posts: " + JSON.stringify(posts));
 };
 

@@ -39,4 +39,30 @@ const getFollowingPosts = async (req, res, next) => {
   });
 };
 
-module.exports = { createPost, getFollowingPosts };
+const likePost = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const { postId } = req.params;
+      await postsQueries.likePost(user.id, postId);
+      res.json({ message: "successfully liked post" });
+    }
+  });
+};
+
+const unlikePost = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const { postId } = req.params;
+      await postsQueries.unlikePost(user.id, postId);
+      res.json({ message: "successfully unliked post" });
+    }
+  });
+};
+
+module.exports = { createPost, getFollowingPosts, likePost, unlikePost };

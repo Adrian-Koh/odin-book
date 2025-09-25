@@ -27,6 +27,8 @@ const getUsersPosts = async (followingUserIds) => {
             avatarUrl: true,
           },
         },
+        likes: true,
+        comments: true,
       },
     });
     userPosts.forEach((post) => posts.push(post));
@@ -35,4 +37,21 @@ const getUsersPosts = async (followingUserIds) => {
   return posts;
 };
 
-module.exports = { createPost, getUsersPosts };
+const likePost = async (userId, postId) => {
+  await prisma.postLike.create({
+    data: {
+      likedById: Number(userId),
+      postId: Number(postId),
+    },
+  });
+};
+
+const unlikePost = async (userId, postId) => {
+  await prisma.postLike.delete({
+    where: {
+      postId_likedById: { likedById: Number(userId), postId: Number(postId) },
+    },
+  });
+};
+
+module.exports = { createPost, getUsersPosts, likePost, unlikePost };
