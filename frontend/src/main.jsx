@@ -5,7 +5,7 @@ import "./index.css";
 import Home from "./pages/Home/Home.jsx";
 import { UserForm } from "./pages/UserForm/UserForm.jsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
-// import { Profile } from "./components/Profile/Profile.jsx";
+import { Profile } from "./components/Profile/Profile.jsx";
 import { Posts } from "./components/Posts/Posts.jsx";
 
 const router = createBrowserRouter([
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <Home />,
     children: [
       { path: "", element: <Posts /> },
-      // { path: "profile", element: <Profile /> },
+      { path: "profile", element: <Profile /> },
     ],
     errorElement: <ErrorPage />,
   },

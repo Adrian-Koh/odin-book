@@ -3,13 +3,18 @@
   height: 95vh;
   display: grid;
   grid-template-columns: 200px calc(95vw - 200px - 200px) 200px;
+  grid-template-rows: 70px calc(95vh - 70px);
   justify-items: center;
   align-content: center;
+  position: relative;
 }
 
-.error {
+.title {
   grid-row: 1 / 2;
   grid-column: 1 / 4;
+  height: 70px;
+  margin: 10px;
+  box-sizing: border-box;
 }
 
 .navBar {

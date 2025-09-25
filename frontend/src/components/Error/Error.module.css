@@ -7,6 +7,8 @@
   justify-self: center;
   font-weight: 600;
   border-radius: 5px;
+  position: absolute;
+  top: 25%;
 }
 
 .dismissError {
