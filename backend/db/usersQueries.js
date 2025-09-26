@@ -45,6 +45,17 @@ const getUserById = async (userid) => {
   return foundUser;
 };
 
+const getAllUsers = async (userid) => {
+  const allUsers = await prisma.user.findMany({
+    where: {
+      NOT: {
+        id: Number(userid),
+      },
+    },
+  });
+  return allUsers;
+};
+
 const getUserFollowing = async (userid) => {
   const followingUsers = await prisma.follow.findMany({
     where: {
@@ -59,5 +70,6 @@ module.exports = {
   addUserEmail,
   getUserByEmail,
   getUserById,
+  getAllUsers,
   getUserFollowing,
 };

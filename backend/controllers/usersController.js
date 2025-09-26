@@ -5,6 +5,29 @@ const {
   validPassword,
 } = require("../utils/passwordUtils");
 
+const getAllUsers = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const users = await usersQueries.getAllUsers(user.id);
+      res.json({ users });
+    }
+  });
+};
+const getFollowingUsers = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const users = await usersQueries.getUserFollowing(user.id);
+      res.json({ users });
+    }
+  });
+};
+
 const loginPost = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -62,16 +85,4 @@ async function signupPost(req, res, next) {
   }
 }
 
-const getFollowingUsers = async (req, res, next) => {
-  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
-    if (err) {
-      return next(err);
-    } else {
-      const user = authData.user;
-      const users = await usersQueries.getUserFollowing(user.id);
-      res.json({ users });
-    }
-  });
-};
-
-module.exports = { loginPost, signupPost, getFollowingUsers };
+module.exports = { getAllUsers, getFollowingUsers, loginPost, signupPost };
