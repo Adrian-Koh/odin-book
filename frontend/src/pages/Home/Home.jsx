@@ -39,8 +39,14 @@ export default function Home() {
           <Link to="/">Home</Link>
           {user ? (
             <>
+              <Link to="users">Users</Link>
               <Link to="profile">Profile</Link>
-              <button onClick={handleLogOut}>Log Out</button>
+              <img
+                src="/logout-variant.svg"
+                alt="logout"
+                className={styles.logOut}
+                onClick={handleLogOut}
+              />
             </>
           ) : (
             <>

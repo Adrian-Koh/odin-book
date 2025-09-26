@@ -7,6 +7,7 @@ import { UserForm } from "./pages/UserForm/UserForm.jsx";
 import ErrorPage from "./pages/ErrorPage/ErrorPage.jsx";
 import { Profile } from "./components/Profile/Profile.jsx";
 import { Posts } from "./components/Posts/Posts.jsx";
+import { AllUsers } from "./components/AllUsers/AllUsers.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Posts /> },
       { path: "profile", element: <Profile /> },
+      { path: "users", element: <AllUsers /> },
     ],
     errorElement: <ErrorPage />,
   },

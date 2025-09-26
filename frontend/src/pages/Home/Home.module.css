@@ -42,8 +42,7 @@
 }
 
 .navLinks a:hover,
-.logOutIcon:hover,
-.user:hover {
+.logOut:hover {
   box-shadow: 2px 2px 3px 3px grey;
 }
 
@@ -55,4 +54,11 @@
 
 .followingUsers {
   grid-column: 3 / 4;
+}
+
+.logOut {
+  height: 30px;
+  width: auto;
+  padding: 3px;
+  border-radius: 5px;
 }

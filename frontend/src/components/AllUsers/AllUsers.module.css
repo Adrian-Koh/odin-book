@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.allUsers {
+  width: 100%;
+}
+
+.user {
+  border: solid 2px black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.displayName {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.profilePic {
+  height: 100px;
+  width: auto;
+}
