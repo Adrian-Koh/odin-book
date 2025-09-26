@@ -2,8 +2,8 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { Error } from "../../components/Error/Error";
-import { UsersList } from "../../components/UsersList/UsersList";
-import { getUserFromToken } from "../../utils/tokenUtils";
+import { FollowingUsers } from "../../components/FollowingUsers/FollowingUsers";
+import { getUserFromToken, removeToken } from "../../utils/tokenUtils";
 
 export default function Home() {
   const [error, setError] = useState("");
@@ -25,6 +25,11 @@ export default function Home() {
     }
   }, [navigate]);
 
+  function handleLogOut() {
+    removeToken();
+    setUser(null);
+  }
+
   return (
     <div className={styles.home}>
       <h1 className={styles.title}>Odinbook</h1>
@@ -35,6 +40,7 @@ export default function Home() {
           {user ? (
             <>
               <Link to="profile">Profile</Link>
+              <button onClick={handleLogOut}>Log Out</button>
             </>
           ) : (
             <>
@@ -47,7 +53,7 @@ export default function Home() {
       <div className={styles.container}>
         <Outlet context={{ user, setUser, setError }}></Outlet>
       </div>
-      <UsersList className={styles.usersList} />
+      <FollowingUsers className={styles.followingUsers} />
     </div>
   );
 }

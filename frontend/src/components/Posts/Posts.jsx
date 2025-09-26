@@ -38,7 +38,11 @@ const Posts = () => {
           {posts.map((post) => (
             <div className={styles.post} key={post.id}>
               <img
-                src={post.author.avatarUrl}
+                src={
+                  post.author.avatarUrl
+                    ? post.author.avatarUrl
+                    : "/face-man-profile.svg"
+                }
                 alt="profile pic"
                 className={styles.profilePic}
               ></img>
