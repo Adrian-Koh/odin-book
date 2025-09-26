@@ -30,3 +30,17 @@ export const getAllUsers = async () => {
 
   return parsed.users;
 };
+
+export const followUser = async (userId) => {
+  const response = await fetch(BACKEND_DOMAIN + "/follow/" + userId, {
+    headers: getTokenHeader(),
+    method: "POST",
+  });
+
+  const parsed = await response.json();
+  console.log("parsed response from follow user: " + JSON.stringify(parsed));
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+};

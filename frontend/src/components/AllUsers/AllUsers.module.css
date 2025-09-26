@@ -23,3 +23,13 @@
   height: 100px;
   width: auto;
 }
+
+.followIcon {
+  height: 20px;
+  width: auto;
+}
+
+.followBtn {
+  display: flex;
+  align-items: center;
+}
