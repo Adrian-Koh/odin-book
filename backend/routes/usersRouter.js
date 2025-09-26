@@ -14,5 +14,10 @@ usersRouter.post(
   verifyToken,
   usersController.postFollow
 );
+usersRouter.delete(
+  "/follow/:followingId",
+  verifyToken,
+  usersController.deleteFollow
+);
 
 module.exports = usersRouter;

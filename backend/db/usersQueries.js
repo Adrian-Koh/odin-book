@@ -74,6 +74,17 @@ const addFollow = async (followerId, followingId) => {
   });
 };
 
+const removeFollow = async (followerId, followingId) => {
+  await prisma.follow.delete({
+    where: {
+      followingId_followerId: {
+        followerId: Number(followerId),
+        followingId: Number(followingId),
+      },
+    },
+  });
+};
+
 module.exports = {
   addUserGithub,
   addUserEmail,
@@ -82,4 +93,5 @@ module.exports = {
   getAllUsers,
   getUserFollowing,
   addFollow,
+  removeFollow,
 };

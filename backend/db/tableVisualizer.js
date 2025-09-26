@@ -14,4 +14,22 @@ const getAllPosts = async () => {
   console.log("All posts: " + JSON.stringify(posts));
 };
 
-getAllPosts();
+const getAllFollows = async () => {
+  const follows = await prisma.follow.findMany({
+    include: {
+      follower: {
+        select: {
+          displayName: true,
+        },
+      },
+      following: {
+        select: {
+          displayName: true,
+        },
+      },
+    },
+  });
+  console.log("All follows: " + JSON.stringify(follows));
+};
+
+getAllFollows();
