@@ -31,14 +31,17 @@ export const getAllUsers = async () => {
   return parsed.users;
 };
 
-export const followUser = async (userId) => {
+export const toggleFollowUser = async (userId, follow) => {
+  const method = follow ? "POST" : "DELETE";
   const response = await fetch(BACKEND_DOMAIN + "/follow/" + userId, {
     headers: getTokenHeader(),
-    method: "POST",
+    method: method,
   });
 
   const parsed = await response.json();
-  console.log("parsed response from follow user: " + JSON.stringify(parsed));
+  console.log(
+    "parsed response from toggle follow user: " + JSON.stringify(parsed)
+  );
 
   if (!response.ok) {
     throw new Error(parsed.message);

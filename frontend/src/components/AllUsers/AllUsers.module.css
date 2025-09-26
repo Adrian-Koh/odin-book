@@ -24,12 +24,14 @@
   width: auto;
 }
 
-.followIcon {
+.followIcon,
+.followingIcon {
   height: 20px;
   width: auto;
 }
 
-.followBtn {
+.followBtn,
+.followingBtn {
   display: flex;
   align-items: center;
 }

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import styles from "./AllUsers.module.css";
-import { followUser, getAllUsers, getFollowingUsers } from "../../api/users";
+import {
+  toggleFollowUser,
+  getAllUsers,
+  getFollowingUsers,
+} from "../../api/users";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -24,8 +28,8 @@ const AllUsers = () => {
     fetchFollowingCb();
   }, []);
 
-  async function handleFollowClick(userId) {
-    await followUser(userId);
+  async function handleFollowClick(userId, follow) {
+    await toggleFollowUser(userId, follow);
     fetchFollowingCb();
   }
 
@@ -44,11 +48,21 @@ const AllUsers = () => {
             <div className={styles.email}>{user.email}</div>
             <div className={styles.following}>
               {following.includes(user.id) ? (
-                <p>Following</p>
+                <button
+                  className={styles.followingBtn}
+                  onClick={() => handleFollowClick(user.id, false)}
+                >
+                  <img
+                    src="/check.svg"
+                    alt="unfollow"
+                    className={styles.followingIcon}
+                  />
+                  Following
+                </button>
               ) : (
                 <button
                   className={styles.followBtn}
-                  onClick={() => handleFollowClick(user.id)}
+                  onClick={() => handleFollowClick(user.id, true)}
                 >
                   <img
                     src="/plus.svg"
