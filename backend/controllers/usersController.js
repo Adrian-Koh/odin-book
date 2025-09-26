@@ -85,4 +85,23 @@ async function signupPost(req, res, next) {
   }
 }
 
-module.exports = { getAllUsers, getFollowingUsers, loginPost, signupPost };
+async function postFollow(req, res, next) {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const { followingId } = req.params;
+      await usersQueries.addFollow(user.id, followingId);
+      res.json({ message: "follow success" });
+    }
+  });
+}
+
+module.exports = {
+  getAllUsers,
+  getFollowingUsers,
+  loginPost,
+  signupPost,
+  postFollow,
+};

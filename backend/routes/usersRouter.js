@@ -9,5 +9,10 @@ usersRouter.get("/", verifyToken, usersController.getAllUsers);
 usersRouter.get("/following", verifyToken, usersController.getFollowingUsers);
 usersRouter.post("/login", usersController.loginPost);
 usersRouter.post("/signup", upload.single("file"), usersController.signupPost);
+usersRouter.post(
+  "/follow/:followingId",
+  verifyToken,
+  usersController.postFollow
+);
 
 module.exports = usersRouter;

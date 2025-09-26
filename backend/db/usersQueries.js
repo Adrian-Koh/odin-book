@@ -65,6 +65,15 @@ const getUserFollowing = async (userid) => {
   return followingUsers;
 };
 
+const addFollow = async (followerId, followingId) => {
+  await prisma.follow.create({
+    data: {
+      followerId: Number(followerId),
+      followingId: Number(followingId),
+    },
+  });
+};
+
 module.exports = {
   addUserGithub,
   addUserEmail,
@@ -72,4 +81,5 @@ module.exports = {
   getUserById,
   getAllUsers,
   getUserFollowing,
+  addFollow,
 };
