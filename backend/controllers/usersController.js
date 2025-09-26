@@ -62,4 +62,16 @@ async function signupPost(req, res, next) {
   }
 }
 
-module.exports = { loginPost, signupPost };
+const getFollowingUsers = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const users = await usersQueries.getUserFollowing(user.id);
+      res.json({ users });
+    }
+  });
+};
+
+module.exports = { loginPost, signupPost, getFollowingUsers };
