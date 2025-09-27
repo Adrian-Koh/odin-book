@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import styles from "./Posts.module.css";
 import { getPosts, togglePostLike } from "../../api/posts";
+import { HomeContext } from "../../pages/Home/Home";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
-  const { user } = useOutletContext();
+  const { user } = useContext(HomeContext);
 
   useEffect(() => {
     const fetchPostsCb = async () => {

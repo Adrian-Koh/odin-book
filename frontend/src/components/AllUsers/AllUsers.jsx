@@ -1,23 +1,11 @@
-import { useEffect, useState } from "react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import styles from "./AllUsers.module.css";
-import {
-  toggleFollowUser,
-  getAllUsers,
-  getFollowingUsers,
-} from "../../api/users";
+import { toggleFollowUser, getAllUsers } from "../../api/users";
+import { HomeContext } from "../../pages/Home/Home";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
-  const [following, setFollowing] = useState([]);
-
-  const fetchFollowingCb = async () => {
-    const fetchedFollowingUsers = await getFollowingUsers();
-    const followingUserIds = fetchedFollowingUsers.map(
-      (user) => user.followingId
-    );
-    setFollowing(followingUserIds);
-  };
+  const { following, fetchFollowing } = useContext(HomeContext);
 
   useEffect(() => {
     const fetchUsersCb = async () => {
@@ -25,12 +13,12 @@ const AllUsers = () => {
       setUsers(fetchedUsers);
     };
     fetchUsersCb();
-    fetchFollowingCb();
+    fetchFollowing();
   }, []);
 
   async function handleFollowClick(userId, follow) {
     await toggleFollowUser(userId, follow);
-    fetchFollowingCb();
+    fetchFollowing();
   }
 
   return (
@@ -47,7 +35,8 @@ const AllUsers = () => {
             <div className={styles.displayName}>{user.displayName}</div>
             <div className={styles.email}>{user.email}</div>
             <div className={styles.following}>
-              {following.includes(user.id) ? (
+              {following.filter((follow) => follow.followingId === user.id)
+                .length > 0 ? (
                 <button
                   className={styles.followingBtn}
                   onClick={() => handleFollowClick(user.id, false)}

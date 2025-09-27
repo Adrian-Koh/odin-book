@@ -1,13 +1,16 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { Error } from "../../components/Error/Error";
 import { FollowingUsers } from "../../components/FollowingUsers/FollowingUsers";
 import { getUserFromToken, removeToken } from "../../utils/tokenUtils";
+import { getFollowingUsers } from "../../api/users";
 
+const HomeContext = createContext({});
 export default function Home() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
+  const [following, setFollowing] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +27,11 @@ export default function Home() {
       setUser(getUserFromToken());
     }
   }, [navigate]);
+
+  const fetchFollowing = async () => {
+    const fetchedUsers = await getFollowingUsers();
+    setFollowing(fetchedUsers);
+  };
 
   function handleLogOut() {
     removeToken();
@@ -56,10 +64,16 @@ export default function Home() {
           )}
         </nav>
       </div>
-      <div className={styles.container}>
-        <Outlet context={{ user, setUser, setError }}></Outlet>
-      </div>
-      <FollowingUsers className={styles.followingUsers} />
+      <HomeContext
+        value={{ user, setUser, setError, following, fetchFollowing }}
+      >
+        <div className={styles.container}>
+          <Outlet></Outlet>
+        </div>
+        <FollowingUsers className={styles.followingUsers} />
+      </HomeContext>
     </div>
   );
 }
+
+export { HomeContext };
