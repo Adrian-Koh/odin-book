@@ -5,13 +5,22 @@
 }
 
 .allUsers {
-  width: 100%;
+  width: max-content;
 }
 
 .user {
   border: solid 2px black;
   border-radius: 5px;
   padding: 5px;
+  display: grid;
+  align-items: center;
+  gap: 5px;
+  grid-template-columns: max-content 1fr;
+  grid-auto-rows: max-content;
+}
+
+.user:hover {
+  box-shadow: 2px 2px 3px 3px grey;
 }
 
 .displayName {
@@ -20,8 +29,10 @@
 }
 
 .profilePic {
-  height: 100px;
+  height: 60px;
   width: auto;
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
 }
 
 .followIcon,
@@ -34,4 +45,29 @@
 .followingBtn {
   display: flex;
   align-items: center;
+  width: max-content;
+  gap: 5px;
+  border: solid 2px blue;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.followingBtn {
+  background-color: white;
+  color: blue;
+}
+
+.followBtn {
+  background-color: blue;
+  color: white;
+}
+
+.followIcon {
+  filter: invert(99%) sepia(4%) saturate(14%) hue-rotate(67deg) brightness(104%)
+    contrast(100%);
+}
+
+.followingIcon {
+  filter: invert(8%) sepia(100%) saturate(6213%) hue-rotate(246deg)
+    brightness(109%) contrast(142%);
 }

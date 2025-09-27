@@ -12,6 +12,15 @@
   border: solid 2px black;
   border-radius: 5px;
   padding: 5px;
+  display: grid;
+  align-items: center;
+  gap: 5px;
+  grid-template-columns: max-content 1fr;
+  grid-auto-rows: max-content;
+}
+
+.user:hover {
+  box-shadow: 2px 2px 3px 3px grey;
 }
 
 .displayName {
@@ -20,6 +29,8 @@
 }
 
 .profilePic {
-  height: 20px;
+  height: 30px;
   width: auto;
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
 }

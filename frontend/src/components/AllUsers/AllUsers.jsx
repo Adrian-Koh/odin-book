@@ -34,34 +34,32 @@ const AllUsers = () => {
             ></img>
             <div className={styles.displayName}>{user.displayName}</div>
             <div className={styles.email}>{user.email}</div>
-            <div className={styles.following}>
-              {following.filter((follow) => follow.followingId === user.id)
-                .length > 0 ? (
-                <button
-                  className={styles.followingBtn}
-                  onClick={() => handleFollowClick(user.id, false)}
-                >
-                  <img
-                    src="/check.svg"
-                    alt="unfollow"
-                    className={styles.followingIcon}
-                  />
-                  Following
-                </button>
-              ) : (
-                <button
-                  className={styles.followBtn}
-                  onClick={() => handleFollowClick(user.id, true)}
-                >
-                  <img
-                    src="/plus.svg"
-                    alt="follow"
-                    className={styles.followIcon}
-                  />
-                  Follow
-                </button>
-              )}
-            </div>
+            {following.filter((follow) => follow.followingId === user.id)
+              .length > 0 ? (
+              <button
+                className={styles.followingBtn}
+                onClick={() => handleFollowClick(user.id, false)}
+              >
+                <img
+                  src="/check.svg"
+                  alt="unfollow"
+                  className={styles.followingIcon}
+                />
+                Following
+              </button>
+            ) : (
+              <button
+                className={styles.followBtn}
+                onClick={() => handleFollowClick(user.id, true)}
+              >
+                <img
+                  src="/plus.svg"
+                  alt="follow"
+                  className={styles.followIcon}
+                />
+                Follow
+              </button>
+            )}
           </div>
         ))}
       </div>
