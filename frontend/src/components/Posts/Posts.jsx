@@ -1,18 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./Posts.module.css";
-import { getPosts, togglePostLike } from "../../api/posts";
+import { getPosts, togglePostLike, submitNewPost } from "../../api/posts";
 import { HomeContext } from "../../pages/Home/Home";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [newPostInput, setNewPostInput] = useState("");
   const { user } = useContext(HomeContext);
 
+  const fetchPosts = async () => {
+    const fetchedPosts = await getPosts();
+    setPosts(fetchedPosts);
+  };
+
   useEffect(() => {
-    const fetchPostsCb = async () => {
-      const fetchedPosts = await getPosts();
-      setPosts(fetchedPosts);
-    };
-    fetchPostsCb();
+    fetchPosts();
   }, []);
 
   async function handleLikeClick(postId, like) {
@@ -30,9 +32,42 @@ const Posts = () => {
     setPosts(newPosts);
   }
 
+  async function handleNewPostSubmit() {
+    await submitNewPost(newPostInput);
+    fetchPosts();
+    setNewPostInput("");
+  }
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Posts</h2>
+      <div className={styles.createPost}>
+        <img
+          src={
+            user && user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"
+          }
+          alt="logged in pic"
+          className={styles.loggedInPic}
+        />
+        <h3 className={styles.newPostTitle}>Create new post</h3>
+        <div className={styles.inputs}>
+          <input
+            type="text"
+            placeholder="Post something..."
+            className={styles.postInput}
+            value={newPostInput}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleNewPostSubmit();
+              }
+            }}
+            onChange={(e) => {
+              setNewPostInput(e.target.value);
+            }}
+          />
+          <input type="submit" onClick={handleNewPostSubmit} />
+        </div>
+      </div>
       {posts && posts.length > 0 ? (
         <div className={styles.posts}>
           {posts.map((post) => (
