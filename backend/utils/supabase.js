@@ -6,8 +6,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const BUCKET_NAME = "Odinbook";
 
-async function uploadPhoto(file) {
-  const filePath = file.originalname;
+async function uploadPhoto(userid, file) {
+  const filePath = `user${userid}/${file.originalname}`;
+
   const { data, error } = await supabase.storage
     .from(BUCKET_NAME)
     .upload(filePath, file.buffer, {

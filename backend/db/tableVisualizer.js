@@ -32,4 +32,4 @@ const getAllFollows = async () => {
   console.log("All follows: " + JSON.stringify(follows));
 };
 
-getAllFollows();
+getAllPosts();

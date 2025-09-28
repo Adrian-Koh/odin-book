@@ -61,6 +61,15 @@ const getUserFollowing = async (userid) => {
     where: {
       followerId: Number(userid),
     },
+    include: {
+      following: {
+        select: {
+          avatarUrl: true,
+          displayName: true,
+          email: true,
+        },
+      },
+    },
   });
   return followingUsers;
 };

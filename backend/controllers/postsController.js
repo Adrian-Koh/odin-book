@@ -10,12 +10,13 @@ const createPost = async (req, res, next) => {
     } else {
       let photoUrl = null;
       if (req.file) {
-        photoUrl = await uploadPhoto(req.file);
+        photoUrl = await uploadPhoto(authData.user.id, req.file);
       }
       const { caption } = req.body;
       const createdPost = await postsQueries.createPost(
         authData.user.id,
-        caption
+        caption,
+        photoUrl
       );
       res.json({ message: "successfully created post", createdPost });
     }

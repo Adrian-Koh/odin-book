@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const postsRouter = Router();
 const postsController = require("../controllers/postsController");
-const multer = require("multer");
 const verifyToken = require("../utils/jwtUtils");
+const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
 postsRouter.get("/", verifyToken, postsController.getFollowingPosts);
