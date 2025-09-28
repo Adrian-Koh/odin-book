@@ -1,6 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 10px;
 }
 
 .title {
@@ -11,12 +13,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+  width: max-content;
 }
 
 .post {
   border: solid 2px black;
   border-radius: 5px;
-  padding: 3px;
+  padding: 10px;
   width: 100%;
   display: grid;
   grid-template-columns: max-content max-content;
@@ -30,6 +34,7 @@
   height: auto;
   grid-column: 1 / 2;
   grid-row: 1 / 3;
+  border-radius: 10px;
 }
 
 .author {
@@ -42,6 +47,21 @@
 .caption {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
+  justify-self: center;
+}
+
+.postImage {
+  grid-column: 2 / 3;
+  width: 50%;
+  height: auto;
+  justify-self: center;
+}
+
+.likesComments {
+  grid-column: 1 / 2;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .likes,
@@ -87,10 +107,15 @@
   margin: 0;
 }
 
+.fileInput {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+
 .inputs {
   display: flex;
   gap: 5px;
-  grid-row: 2 / 3;
+  grid-row: 3 / 4;
   grid-column: 2 / 3;
 }
 

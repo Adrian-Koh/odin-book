@@ -6,6 +6,7 @@ import { HomeContext } from "../../pages/Home/Home";
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [newPostInput, setNewPostInput] = useState("");
+  const [file, setFile] = useState(null);
   const { user } = useContext(HomeContext);
 
   const fetchPosts = async () => {
@@ -33,7 +34,7 @@ const Posts = () => {
   }
 
   async function handleNewPostSubmit() {
-    await submitNewPost(newPostInput);
+    await submitNewPost(newPostInput, file);
     fetchPosts();
     setNewPostInput("");
   }
@@ -41,33 +42,43 @@ const Posts = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Posts</h2>
-      <div className={styles.createPost}>
-        <img
-          src={
-            user && user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"
-          }
-          alt="logged in pic"
-          className={styles.loggedInPic}
-        />
-        <h3 className={styles.newPostTitle}>Create new post</h3>
-        <div className={styles.inputs}>
-          <input
-            type="text"
-            placeholder="Post something..."
-            className={styles.postInput}
-            value={newPostInput}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleNewPostSubmit();
-              }
-            }}
-            onChange={(e) => {
-              setNewPostInput(e.target.value);
-            }}
+      {user ? (
+        <div className={styles.createPost}>
+          <img
+            src={
+              user && user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"
+            }
+            alt="logged in pic"
+            className={styles.loggedInPic}
           />
-          <input type="submit" onClick={handleNewPostSubmit} />
+          <h3 className={styles.newPostTitle}>Create new post</h3>
+          <div className={styles.fileInput}>
+            Attach a photo:{" "}
+            <input
+              type="file"
+              onChange={(e) => setFile(e.target.files[0])}
+              accept="image/*"
+            />
+          </div>
+          <div className={styles.inputs}>
+            <input
+              type="text"
+              placeholder="Post something..."
+              className={styles.postInput}
+              value={newPostInput}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleNewPostSubmit();
+                }
+              }}
+              onChange={(e) => {
+                setNewPostInput(e.target.value);
+              }}
+            />
+            <input type="submit" onClick={handleNewPostSubmit} />
+          </div>
         </div>
-      </div>
+      ) : null}
       {posts && posts.length > 0 ? (
         <div className={styles.posts}>
           {posts.map((post) => (
@@ -83,33 +94,42 @@ const Posts = () => {
               ></img>
               <div className={styles.author}>{post.author.displayName}</div>
               <div className={styles.caption}>{post.caption}</div>
-              <div className={styles.likes}>
+              {post.photoUrl ? (
                 <img
-                  src="/heart.svg"
-                  alt="heart"
-                  className={
-                    post.likes.filter((like) => like.likedById === user.id)
-                      .length > 0
-                      ? `${styles.likeIcon} ${styles.liked}`
-                      : `${styles.likeIcon}`
-                  }
-                  onClick={() =>
-                    handleLikeClick(
-                      post.id,
-                      !post.likes.filter((like) => like.likedById === user.id)
+                  src={post.photoUrl}
+                  alt="post image"
+                  className={styles.postImage}
+                />
+              ) : null}
+              <div className={styles.likesComments}>
+                <div className={styles.likes}>
+                  <img
+                    src="/heart.svg"
+                    alt="heart"
+                    className={
+                      post.likes.filter((like) => like.likedById === user.id)
                         .length > 0
-                    )
-                  }
-                />
-                {post.likes.length}
-              </div>
-              <div className={styles.comments}>
-                <img
-                  src="/comment.svg"
-                  alt="comment"
-                  className={styles.commentIcon}
-                />
-                {post.comments.length}
+                        ? `${styles.likeIcon} ${styles.liked}`
+                        : `${styles.likeIcon}`
+                    }
+                    onClick={() =>
+                      handleLikeClick(
+                        post.id,
+                        !post.likes.filter((like) => like.likedById === user.id)
+                          .length > 0
+                      )
+                    }
+                  />
+                  {post.likes.length}
+                </div>
+                <div className={styles.comments}>
+                  <img
+                    src="/comment.svg"
+                    alt="comment"
+                    className={styles.commentIcon}
+                  />
+                  {post.comments.length}
+                </div>
               </div>
             </div>
           ))}
