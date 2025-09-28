@@ -33,7 +33,7 @@ const getUsersPosts = async (followingUserIds) => {
     });
     userPosts.forEach((post) => posts.push(post));
   }
-  posts.sort((a, b) => a.id - b.id);
+  posts.sort((a, b) => b.id - a.id);
   return posts;
 };
 
