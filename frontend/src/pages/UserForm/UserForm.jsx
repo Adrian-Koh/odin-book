@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./UserForm.module.css";
 import { submitSignupEmail, submitLoginEmail } from "../../api/authentication";
-import { getUserFromToken } from "../../utils/tokenUtils";
 import { Error } from "../../components/Error/Error";
 
 const UserForm = ({ action }) => {
@@ -35,8 +34,6 @@ const UserForm = ({ action }) => {
       submitLoginEmail(email, password)
         .then(() => {
           setLoading(false);
-          const user = getUserFromToken();
-          //   setUser(user);
           navigate("/");
         })
         .catch((err) => {

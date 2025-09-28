@@ -67,10 +67,19 @@ export default function Home() {
       <HomeContext
         value={{ user, setUser, setError, following, fetchFollowing }}
       >
-        <div className={styles.container}>
-          <Outlet></Outlet>
-        </div>
-        <FollowingUsers className={styles.followingUsers} />
+        {user ? (
+          <>
+            <div className={styles.container}>
+              <Outlet></Outlet>
+            </div>
+            <FollowingUsers className={styles.followingUsers} />
+          </>
+        ) : (
+          <p>
+            Welcome to Odinbook! Please log in or sign up to interact with the
+            world.
+          </p>
+        )}
       </HomeContext>
     </div>
   );

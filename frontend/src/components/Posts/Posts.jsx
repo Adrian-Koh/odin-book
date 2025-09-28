@@ -42,43 +42,41 @@ const Posts = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Posts</h2>
-      {user ? (
-        <div className={styles.createPost}>
-          <img
-            src={
-              user && user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"
-            }
-            alt="logged in pic"
-            className={styles.loggedInPic}
+      <div className={styles.createPost}>
+        <img
+          src={
+            user && user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"
+          }
+          alt="logged in pic"
+          className={styles.loggedInPic}
+        />
+        <h3 className={styles.newPostTitle}>Create new post</h3>
+        <div className={styles.fileInput}>
+          Attach a photo:{" "}
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            accept="image/*"
           />
-          <h3 className={styles.newPostTitle}>Create new post</h3>
-          <div className={styles.fileInput}>
-            Attach a photo:{" "}
-            <input
-              type="file"
-              onChange={(e) => setFile(e.target.files[0])}
-              accept="image/*"
-            />
-          </div>
-          <div className={styles.inputs}>
-            <input
-              type="text"
-              placeholder="Post something..."
-              className={styles.postInput}
-              value={newPostInput}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleNewPostSubmit();
-                }
-              }}
-              onChange={(e) => {
-                setNewPostInput(e.target.value);
-              }}
-            />
-            <input type="submit" onClick={handleNewPostSubmit} />
-          </div>
         </div>
-      ) : null}
+        <div className={styles.inputs}>
+          <input
+            type="text"
+            placeholder="Post something..."
+            className={styles.postInput}
+            value={newPostInput}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleNewPostSubmit();
+              }
+            }}
+            onChange={(e) => {
+              setNewPostInput(e.target.value);
+            }}
+          />
+          <input type="submit" onClick={handleNewPostSubmit} />
+        </div>
+      </div>
       {posts && posts.length > 0 ? (
         <div className={styles.posts}>
           {posts.map((post) => (
