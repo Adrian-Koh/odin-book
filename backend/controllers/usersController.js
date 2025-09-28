@@ -4,6 +4,7 @@ const {
   generatePasswordHash,
   validPassword,
 } = require("../utils/passwordUtils");
+const { uploadProfilePic } = require("../utils/supabase");
 
 const getAllUsers = async (req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
@@ -67,7 +68,7 @@ async function signupPost(req, res, next) {
 
     let avatarUrl = null;
     if (req.file) {
-      avatarUrl = await uploadFile(username, req.file);
+      avatarUrl = await uploadProfilePic(email, req.file);
     }
 
     const user = await usersQueries.addUserEmail(

@@ -8,7 +8,15 @@ const BUCKET_NAME = "Odinbook";
 
 async function uploadPhoto(userid, file) {
   const filePath = `user${userid}/${file.originalname}`;
+  return await uploadFile(filePath, file);
+}
 
+async function uploadProfilePic(email, file) {
+  const filePath = `profile_pic/${email}/${file.originalname}`;
+  return await uploadFile(filePath, file);
+}
+
+async function uploadFile(filePath, file) {
   const { data, error } = await supabase.storage
     .from(BUCKET_NAME)
     .upload(filePath, file.buffer, {
@@ -30,4 +38,5 @@ function getFileUrl(filePath) {
 
 module.exports = {
   uploadPhoto,
+  uploadProfilePic,
 };
