@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import styles from "./Posts.module.css";
 import { getPosts, togglePostLike, submitNewPost } from "../../api/posts";
 import { HomeContext } from "../../pages/Home/Home";
@@ -8,6 +8,7 @@ const Posts = () => {
   const [newPostInput, setNewPostInput] = useState("");
   const [file, setFile] = useState(null);
   const { user } = useContext(HomeContext);
+  const fileInputRef = useRef(null);
 
   const fetchPosts = async () => {
     const fetchedPosts = await getPosts();
@@ -37,6 +38,10 @@ const Posts = () => {
     await submitNewPost(newPostInput, file);
     fetchPosts();
     setNewPostInput("");
+    setFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
   }
 
   return (
@@ -57,6 +62,7 @@ const Posts = () => {
             type="file"
             onChange={(e) => setFile(e.target.files[0])}
             accept="image/*"
+            ref={fileInputRef}
           />
         </div>
         <div className={styles.inputs}>
@@ -90,8 +96,15 @@ const Posts = () => {
                 alt="profile pic"
                 className={styles.profilePic}
               ></img>
-              <div className={styles.author}>{post.author.displayName}</div>
-              <div className={styles.caption}>{post.caption}</div>
+              <div className={styles.author}>
+                <div className={styles.displayName}>
+                  {post.author.displayName}
+                </div>
+                <div className={styles.email}>{post.author.email}</div>
+              </div>
+              <div className={styles.caption}>
+                <i>{post.caption}</i>
+              </div>
               {post.photoUrl ? (
                 <img
                   src={post.photoUrl}
