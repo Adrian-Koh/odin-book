@@ -15,3 +15,20 @@ export const submitComment = async (postId, comment) => {
     throw new Error(parsed.message);
   }
 };
+
+export const getPostComments = async (postId) => {
+  const response = await fetch(BACKEND_DOMAIN + `/${postId}/comments`, {
+    headers: getTokenHeader(),
+  });
+
+  const parsed = await response.json();
+  console.log(
+    "parsed response from get post comments: " + JSON.stringify(parsed)
+  );
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+
+  return parsed.comments;
+};

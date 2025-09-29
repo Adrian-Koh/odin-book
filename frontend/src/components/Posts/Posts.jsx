@@ -2,7 +2,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import styles from "./Posts.module.css";
 import { getPosts, togglePostLike, submitNewPost } from "../../api/posts";
 import { HomeContext } from "../../pages/Home/Home";
-import { submitComment } from "../../api/comments";
+import { getPostComments, submitComment } from "../../api/comments";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -44,9 +44,11 @@ const Posts = () => {
     const newPosts = [...posts];
     for (const post of newPosts) {
       if (post.id === postId) {
-        // TODO: get new comments and update posts
+        const comments = await getPostComments(postId);
+        post.comments = comments;
       }
     }
+    setPosts(newPosts);
   }
 
   async function handleNewPostSubmit() {
@@ -164,7 +166,7 @@ const Posts = () => {
                 <div className={styles.commentSection}>
                   {post.comments && post.comments.length > 0
                     ? post.comments.map((comment) => (
-                        <div className={styles.comment}>
+                        <div className={styles.comment} key={comment.id}>
                           {comment.author.displayName}: {comment.text}
                         </div>
                       ))
