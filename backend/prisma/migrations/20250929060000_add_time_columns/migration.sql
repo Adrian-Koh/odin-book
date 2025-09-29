@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "public"."Comment" ADD COLUMN     "addedTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "editedTime" TIMESTAMP(3);
+
+-- AlterTable
+ALTER TABLE "public"."Post" ADD COLUMN     "addedTime" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN     "editedTime" TIMESTAMP(3);
