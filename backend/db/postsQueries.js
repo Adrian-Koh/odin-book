@@ -33,6 +33,8 @@ const getUsersPosts = async (userIds) => {
             author: {
               select: {
                 displayName: true,
+                email: true,
+                avatarUrl: true,
               },
             },
             id: true,

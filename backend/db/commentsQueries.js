@@ -20,6 +20,8 @@ const getPostComments = async (postId) => {
       author: {
         select: {
           displayName: true,
+          email: true,
+          avatarUrl: true,
         },
       },
       id: true,
