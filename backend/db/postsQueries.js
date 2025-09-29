@@ -28,7 +28,17 @@ const getUsersPosts = async (userIds) => {
           },
         },
         likes: true,
-        comments: true,
+        comments: {
+          select: {
+            author: {
+              select: {
+                displayName: true,
+              },
+            },
+            text: true,
+            addedTime: true,
+          },
+        },
       },
     });
     userPosts.forEach((post) => posts.push(post));
