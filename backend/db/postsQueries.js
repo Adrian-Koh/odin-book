@@ -35,6 +35,7 @@ const getUsersPosts = async (userIds) => {
                 displayName: true,
               },
             },
+            id: true,
             text: true,
             addedTime: true,
           },

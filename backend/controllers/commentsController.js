@@ -19,4 +19,16 @@ const createComment = async (req, res, next) => {
   });
 };
 
-module.exports = { createComment };
+const getPostComments = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const { postId } = req.params;
+      const comments = await commentsQueries.getPostComments(postId);
+      res.json({ comments });
+    }
+  });
+};
+
+module.exports = { createComment, getPostComments };

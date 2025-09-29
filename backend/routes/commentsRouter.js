@@ -3,6 +3,11 @@ const commentsRouter = Router();
 const commentsController = require("../controllers/commentsController");
 const verifyToken = require("../utils/jwtUtils");
 
+commentsRouter.get(
+  "/:postId/comments",
+  verifyToken,
+  commentsController.getPostComments
+);
 commentsRouter.post(
   "/:postId/comments",
   verifyToken,

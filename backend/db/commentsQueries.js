@@ -11,4 +11,24 @@ const createComment = async (authorId, postId, text) => {
   return createdComment;
 };
 
-module.exports = { createComment };
+const getPostComments = async (postId) => {
+  const comments = await prisma.comment.findMany({
+    where: {
+      postId: Number(postId),
+    },
+    select: {
+      author: {
+        select: {
+          displayName: true,
+        },
+      },
+      id: true,
+      text: true,
+      addedTime: true,
+    },
+  });
+  comments.sort((a, b) => a.id - b.id);
+  return comments;
+};
+
+module.exports = { createComment, getPostComments };
