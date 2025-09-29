@@ -18,22 +18,28 @@ const Profile = () => {
   return (
     <div className={styles.container}>
       <h2>Profile</h2>
-      {user.avatarUrl ? (
-        <img
-          src={user.avatarUrl}
-          alt="profile pic"
-          className={styles.profilePic}
-        />
-      ) : null}
-      <h3 className={styles.displayName}>{user.displayName}</h3>
-      <div className={styles.email}>Email: {user.email}</div>
+      <div className={styles.info}>
+        {user.avatarUrl ? (
+          <img
+            src={user.avatarUrl}
+            alt="profile pic"
+            className={styles.profilePic}
+          />
+        ) : null}
+        <h3 className={styles.displayName}>{user.displayName}</h3>
+        <div className={styles.email}>
+          <i>{user.email}</i>
+        </div>
+      </div>
       {posts && posts.length > 0 ? (
         <>
-          <h4>Posts</h4>
+          <h4 className={styles.postsTitle}>Posts</h4>
           <div className={styles.posts}>
             {posts.map((post) => (
               <div className={styles.post}>
-                <div className={styles.caption}>{post.caption}</div>
+                <div className={styles.caption}>
+                  <i>{post.caption}</i>
+                </div>
                 {post.photoUrl ? (
                   <img src={post.photoUrl} className={styles.postPhoto} />
                 ) : null}
