@@ -164,13 +164,32 @@ const Posts = () => {
               </div>
               {commentsActiveId === post.id ? (
                 <div className={styles.commentSection}>
-                  {post.comments && post.comments.length > 0
-                    ? post.comments.map((comment) => (
+                  {post.comments && post.comments.length > 0 ? (
+                    <>
+                      <div className={styles.commentsTitle}>Comments</div>
+                      {post.comments.map((comment) => (
                         <div className={styles.comment} key={comment.id}>
-                          {comment.author.displayName}: {comment.text}
+                          <img
+                            src={
+                              comment.author.avatarUrl
+                                ? comment.author.avatarUrl
+                                : "/face-man-profile.svg"
+                            }
+                            className={styles.commentPic}
+                          />
+                          <div className={styles.commentAuthor}>
+                            <b>{comment.author.displayName}</b>{" "}
+                            <span className={styles.commentEmail}>
+                              ({comment.author.email})
+                            </span>
+                          </div>
+                          <div className={styles.commentText}>
+                            {comment.text}
+                          </div>
                         </div>
-                      ))
-                    : null}
+                      ))}
+                    </>
+                  ) : null}
                   <div className={styles.commentsInput}>
                     <input
                       type="text"
