@@ -1,0 +1,17 @@
+import { getTokenHeader } from "../utils/tokenUtils";
+const BACKEND_DOMAIN = "http://localhost:8000/posts";
+
+export const submitComment = async (postId, comment) => {
+  const response = await fetch(BACKEND_DOMAIN + `/${postId}/comments`, {
+    headers: { "Content-Type": "application/json", ...getTokenHeader() },
+    method: "POST",
+    body: JSON.stringify({ comment }),
+  });
+
+  const parsed = await response.json();
+  console.log("parsed response from submit comment: " + JSON.stringify(parsed));
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+};

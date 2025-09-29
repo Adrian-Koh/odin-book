@@ -142,3 +142,21 @@
 .postInput {
   width: 100%;
 }
+
+.commentSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column: 1 / 3;
+}
+
+.commentsInput {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+}
+
+.commentsInput input[type="text"] {
+  width: 100%;
+}
