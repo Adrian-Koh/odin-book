@@ -11,9 +11,9 @@ const createPost = async (authorId, caption, photoUrl = null) => {
   return createdPost;
 };
 
-const getUsersPosts = async (followingUserIds) => {
+const getUsersPosts = async (userIds) => {
   const posts = [];
-  for (const userid of followingUserIds) {
+  for (const userid of userIds) {
     const userPosts = await prisma.post.findMany({
       where: {
         authorId: Number(userid),

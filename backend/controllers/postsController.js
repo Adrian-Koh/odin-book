@@ -40,6 +40,18 @@ const getFollowingPosts = async (req, res, next) => {
   });
 };
 
+const getUserPosts = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const posts = await postsQueries.getUsersPosts([user.id]);
+      res.json({ posts });
+    }
+  });
+};
+
 const likePost = async (req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
     if (err) {
@@ -66,4 +78,10 @@ const unlikePost = async (req, res, next) => {
   });
 };
 
-module.exports = { createPost, getFollowingPosts, likePost, unlikePost };
+module.exports = {
+  createPost,
+  getFollowingPosts,
+  getUserPosts,
+  likePost,
+  unlikePost,
+};
