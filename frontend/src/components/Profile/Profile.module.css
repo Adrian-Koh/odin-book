@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.profilePic {
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.displayName {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.email {
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+}
+
+.postPhoto {
+  width: 100px;
+  height: auto;
+}
