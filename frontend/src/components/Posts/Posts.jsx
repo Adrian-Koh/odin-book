@@ -3,6 +3,7 @@ import styles from "./Posts.module.css";
 import { getPosts, togglePostLike, submitNewPost } from "../../api/posts";
 import { HomeContext } from "../../pages/Home/Home";
 import { getPostComments, submitComment } from "../../api/comments";
+import { getTimeSincePost } from "../../utils/timeUtils";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -113,11 +114,22 @@ const Posts = () => {
                 alt="profile pic"
                 className={styles.profilePic}
               ></img>
-              <div className={styles.author}>
-                <div className={styles.displayName}>
-                  {post.author.displayName}
+              <div className={styles.authorTime}>
+                <div className={styles.author}>
+                  <div className={styles.displayName}>
+                    {post.author.displayName}
+                  </div>
+                  <div className={styles.email}>{post.author.email}</div>
                 </div>
-                <div className={styles.email}>{post.author.email}</div>
+                <div className={styles.postTime}>
+                  {post.editedTime ? (
+                    <>
+                      {getTimeSincePost(post.editedTime)} ago <i>(edited)</i>
+                    </>
+                  ) : (
+                    <>{getTimeSincePost(post.addedTime)} ago</>
+                  )}
+                </div>
               </div>
               <div className={styles.caption}>
                 <i>{post.caption}</i>
