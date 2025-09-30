@@ -64,6 +64,7 @@ const getUserFollowing = async (userid) => {
     include: {
       following: {
         select: {
+          id: true,
           avatarUrl: true,
           displayName: true,
           email: true,

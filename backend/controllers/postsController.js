@@ -45,8 +45,9 @@ const getUserPosts = async (req, res, next) => {
     if (err) {
       return next(err);
     } else {
+      const { userId } = req.params;
       const user = authData.user;
-      const posts = await postsQueries.getUsersPosts([user.id]);
+      const posts = await postsQueries.getUsersPosts([userId]);
       res.json({ posts });
     }
   });

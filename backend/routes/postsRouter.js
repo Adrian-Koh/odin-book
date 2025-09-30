@@ -6,7 +6,7 @@ const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
 postsRouter.get("/", verifyToken, postsController.getFollowingPosts);
-postsRouter.get("/single", verifyToken, postsController.getUserPosts);
+postsRouter.get("/single/:userId", verifyToken, postsController.getUserPosts);
 postsRouter.post(
   "/",
   verifyToken,
