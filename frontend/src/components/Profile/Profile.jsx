@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./Profile.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { getUserPosts } from "../../api/posts";
+import { getTimeSincePost } from "../../utils/timeUtils";
 
 const Profile = () => {
   const [posts, setPosts] = useState([]);
@@ -39,6 +40,15 @@ const Profile = () => {
               <div className={styles.post}>
                 <div className={styles.caption}>
                   <i>{post.caption}</i>
+                </div>
+                <div className={styles.postTime}>
+                  {post.editedTime ? (
+                    <>
+                      {getTimeSincePost(post.editedTime)} ago <i>(edited)</i>
+                    </>
+                  ) : (
+                    <>{getTimeSincePost(post.addedTime)} ago</>
+                  )}
                 </div>
                 {post.photoUrl ? (
                   <img src={post.photoUrl} className={styles.postPhoto} />

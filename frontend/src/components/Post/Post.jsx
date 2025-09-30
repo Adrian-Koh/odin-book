@@ -1,0 +1,137 @@
+import { useContext, useState } from "react";
+import styles from "./Post.module.css";
+import { HomeContext } from "../../pages/Home/Home";
+import { getTimeSincePost } from "../../utils/timeUtils";
+
+const Post = ({
+  post,
+  handleLikeClick,
+  handleCommentSubmit,
+  commentsActiveId,
+  setCommentsActiveId,
+}) => {
+  const [comment, setComment] = useState("");
+
+  const { user } = useContext(HomeContext);
+  return (
+    <div className={styles.post} key={post.id}>
+      <img
+        src={
+          post.author.avatarUrl
+            ? post.author.avatarUrl
+            : "/face-man-profile.svg"
+        }
+        alt="profile pic"
+        className={styles.profilePic}
+      ></img>
+      <div className={styles.authorTime}>
+        <div className={styles.author}>
+          <div className={styles.displayName}>{post.author.displayName}</div>
+          <div className={styles.email}>{post.author.email}</div>
+        </div>
+        <div className={styles.postTime}>
+          {post.editedTime ? (
+            <>
+              {getTimeSincePost(post.editedTime)} ago <i>(edited)</i>
+            </>
+          ) : (
+            <>{getTimeSincePost(post.addedTime)} ago</>
+          )}
+        </div>
+      </div>
+      <div className={styles.caption}>
+        <i>{post.caption}</i>
+      </div>
+      {post.photoUrl ? (
+        <img
+          src={post.photoUrl}
+          alt="post image"
+          className={styles.postImage}
+        />
+      ) : null}
+      <div className={styles.likesComments}>
+        <div className={styles.likes}>
+          <img
+            src="/heart.svg"
+            alt="heart"
+            className={
+              post.likes.filter((like) => like.likedById === user.id).length > 0
+                ? `${styles.likeIcon} ${styles.liked}`
+                : `${styles.likeIcon}`
+            }
+            onClick={() =>
+              handleLikeClick(
+                post.id,
+                !post.likes.filter((like) => like.likedById === user.id)
+                  .length > 0
+              )
+            }
+          />
+          {post.likes.length}
+        </div>
+        <div
+          className={styles.comments}
+          onClick={() => setCommentsActiveId(post.id)}
+        >
+          <img
+            src="/comment.svg"
+            alt="comment"
+            className={styles.commentIcon}
+          />
+          {post.comments.length}
+        </div>
+      </div>
+      {commentsActiveId === post.id ? (
+        <div className={styles.commentSection}>
+          {post.comments && post.comments.length > 0 ? (
+            <>
+              <div className={styles.commentsTitle}>Comments</div>
+              {post.comments.map((comment) => (
+                <div className={styles.comment} key={comment.id}>
+                  <img
+                    src={
+                      comment.author.avatarUrl
+                        ? comment.author.avatarUrl
+                        : "/face-man-profile.svg"
+                    }
+                    className={styles.commentPic}
+                  />
+                  <div className={styles.commentAuthor}>
+                    <b>{comment.author.displayName}</b>{" "}
+                    <span className={styles.commentEmail}>
+                      ({comment.author.email})
+                    </span>
+                  </div>
+                  <div className={styles.commentText}>{comment.text}</div>
+                </div>
+              ))}
+            </>
+          ) : null}
+          <div className={styles.commentsInput}>
+            <input
+              type="text"
+              placeholder="Add a comment..."
+              value={comment}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleCommentSubmit(post.id, comment);
+                  setComment("");
+                }
+              }}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <input
+              type="submit"
+              onClick={() => {
+                handleCommentSubmit(post.id, comment);
+                setComment("");
+              }}
+            />
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+export { Post };
