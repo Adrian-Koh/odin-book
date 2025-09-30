@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import styles from "./Posts.module.css";
-import { getPosts, togglePostLike, submitNewPost } from "../../api/posts";
+import { getPosts, submitNewPost } from "../../api/posts";
 import { HomeContext } from "../../pages/Home/Home";
 import { Post } from "../Post/Post";
-import { getPostComments, submitComment } from "../../api/comments";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -22,33 +21,6 @@ const Posts = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-
-  async function handleLikeClick(postId, like) {
-    await togglePostLike(postId, like);
-    const newPosts = [...posts];
-    for (const post of newPosts) {
-      if (post.id === postId) {
-        if (like) {
-          post.likes.push({ likedById: user.id, postId });
-        } else {
-          post.likes = post.likes.filter((like) => like.likedById !== user.id);
-        }
-      }
-    }
-    setPosts(newPosts);
-  }
-
-  async function handleCommentSubmit(postId, comment) {
-    await submitComment(postId, comment);
-    const newPosts = [...posts];
-    for (const post of newPosts) {
-      if (post.id === postId) {
-        const comments = await getPostComments(postId);
-        post.comments = comments;
-      }
-    }
-    setPosts(newPosts);
-  }
 
   async function handleNewPostSubmit() {
     await submitNewPost(newPostInput, file);
@@ -104,8 +76,8 @@ const Posts = () => {
           {posts.map((post) => (
             <Post
               post={post}
-              handleLikeClick={handleLikeClick}
-              handleCommentSubmit={handleCommentSubmit}
+              posts={posts}
+              setPosts={setPosts}
               commentsActiveId={commentsActiveId}
               setCommentsActiveId={setCommentsActiveId}
             />

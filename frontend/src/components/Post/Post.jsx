@@ -2,17 +2,47 @@ import { useContext, useState } from "react";
 import styles from "./Post.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { getTimeSincePost } from "../../utils/timeUtils";
+import { togglePostLike } from "../../api/posts";
+import { getPostComments, submitComment } from "../../api/comments";
 
 const Post = ({
   post,
-  handleLikeClick,
-  handleCommentSubmit,
+  posts,
+  setPosts,
   commentsActiveId,
   setCommentsActiveId,
 }) => {
   const [comment, setComment] = useState("");
 
   const { user } = useContext(HomeContext);
+
+  async function handleLikeClick(postId, like) {
+    await togglePostLike(postId, like);
+    const newPosts = [...posts];
+    for (const post of newPosts) {
+      if (post.id === postId) {
+        if (like) {
+          post.likes.push({ likedById: user.id, postId });
+        } else {
+          post.likes = post.likes.filter((like) => like.likedById !== user.id);
+        }
+      }
+    }
+    setPosts(newPosts);
+  }
+
+  async function handleCommentSubmit(postId, comment) {
+    await submitComment(postId, comment);
+    const newPosts = [...posts];
+    for (const post of newPosts) {
+      if (post.id === postId) {
+        const comments = await getPostComments(postId);
+        post.comments = comments;
+      }
+    }
+    setPosts(newPosts);
+  }
+
   return (
     <div className={styles.post} key={post.id}>
       <img
