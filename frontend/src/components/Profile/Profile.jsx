@@ -3,14 +3,15 @@ import styles from "./Profile.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { Post } from "../Post/Post";
 import { getUserPosts } from "../../api/posts";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [commentsActiveId, setCommentsActiveId] = useState(-1);
   const [profileUser, setProfileUser] = useState(null);
+  const [file, setFile] = useState(null);
+  const [name, setName] = useState("");
   const { user, following } = useContext(HomeContext);
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -33,7 +34,10 @@ const Profile = () => {
     } else {
       setProfileUser(user);
     }
-  }, [navigate, searchParams]);
+  }, [searchParams]);
+
+  function handlePhotoSubmit() {}
+  function handleNameSubmit() {}
 
   return profileUser ? (
     <div className={styles.container}>
@@ -46,7 +50,34 @@ const Profile = () => {
             className={styles.profilePic}
           />
         ) : null}
-        <h3 className={styles.displayName}>{profileUser.displayName}</h3>
+        {profileUser.id === user.id ? (
+          <div className={styles.fileInput}>
+            <label htmlFor="file">
+              {profileUser.avatarUrl ? "Edit" : "Add"} profile pic:{" "}
+            </label>
+            <input
+              type="file"
+              id="file"
+              onChange={(e) => setFile(e.target.files[0])}
+              accept="image/*"
+            />
+            <input type="submit" onClick={handlePhotoSubmit} />
+          </div>
+        ) : null}
+        <h3 className={styles.displayName}>
+          {profileUser.displayName}
+          {profileUser.id === user.id ? (
+            <div className={styles.nameInput}>
+              <label htmlFor="name">Edit name:</label>
+              <input
+                type="text"
+                id="name"
+                onChange={(e) => setName(e.target.value)}
+              />
+              <input type="submit" onClick={handleNameSubmit} />
+            </div>
+          ) : null}
+        </h3>
         <div className={styles.email}>
           <i>{profileUser.email}</i>
         </div>
