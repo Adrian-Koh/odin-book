@@ -1,8 +1,8 @@
 import { getTokenHeader } from "../utils/tokenUtils";
 const BACKEND_DOMAIN = "http://localhost:8000/posts";
 
-export const getUserPosts = async () => {
-  const response = await fetch(BACKEND_DOMAIN + "/single", {
+export const getUserPosts = async (userId) => {
+  const response = await fetch(BACKEND_DOMAIN + "/single/" + userId, {
     headers: getTokenHeader(),
   });
   const parsed = await response.json();
