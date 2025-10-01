@@ -28,11 +28,7 @@ const AllUsers = () => {
       <h2>All Users</h2>
       <div className={styles.allUsers}>
         {users.map((user) => (
-          <div
-            className={styles.user}
-            key={user.id}
-            onClick={() => navigate("/profile?id=" + user.id)}
-          >
+          <div className={styles.user} key={user.id}>
             <img
               src={user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"}
               alt="profile pic"

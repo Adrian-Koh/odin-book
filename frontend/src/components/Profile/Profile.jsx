@@ -4,6 +4,8 @@ import { HomeContext } from "../../pages/Home/Home";
 import { Post } from "../Post/Post";
 import { getUserPosts } from "../../api/posts";
 import { useSearchParams } from "react-router-dom";
+import { submitName, submitProfilePic } from "../../api/profile";
+import { getUserFromToken } from "../../utils/tokenUtils";
 
 const Profile = () => {
   const [posts, setPosts] = useState([]);
@@ -12,7 +14,7 @@ const Profile = () => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [editActiveField, setEditActiveField] = useState("");
-  const { user, following } = useContext(HomeContext);
+  const { user, following, setUser } = useContext(HomeContext);
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -35,12 +37,16 @@ const Profile = () => {
     } else {
       setProfileUser(user);
     }
-  }, [searchParams]);
+  }, [searchParams, user]);
 
-  function handlePhotoSubmit() {
+  async function handlePhotoSubmit() {
+    await submitProfilePic(file);
+    setUser(getUserFromToken());
     setEditActiveField("");
   }
-  function handleNameSubmit() {
+  async function handleNameSubmit() {
+    await submitName(name);
+    setUser(getUserFromToken());
     setEditActiveField("");
   }
 
@@ -95,12 +101,20 @@ const Profile = () => {
               {editActiveField === "name" ? (
                 <div className={styles.nameInput}>
                   <label htmlFor="name">Edit name:</label>
-                  <input
-                    type="text"
-                    id="name"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  <input type="submit" onClick={handleNameSubmit} />
+                  <div className={styles.inputs}>
+                    <input
+                      type="text"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <img
+                      src="/send.svg"
+                      alt="send"
+                      onClick={handleNameSubmit}
+                      className={styles.submit}
+                    />
+                  </div>
                 </div>
               ) : null}
             </>

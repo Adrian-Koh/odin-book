@@ -20,10 +20,6 @@
   margin-bottom: 5px;
 }
 
-.user:hover {
-  box-shadow: 2px 2px 3px 3px grey;
-}
-
 .displayName {
   font-weight: 600;
   font-size: 1.2rem;
