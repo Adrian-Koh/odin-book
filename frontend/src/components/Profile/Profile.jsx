@@ -11,6 +11,7 @@ const Profile = () => {
   const [profileUser, setProfileUser] = useState(null);
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
+  const [editActiveField, setEditActiveField] = useState("");
   const { user, following } = useContext(HomeContext);
   const [searchParams] = useSearchParams();
 
@@ -36,48 +37,75 @@ const Profile = () => {
     }
   }, [searchParams]);
 
-  function handlePhotoSubmit() {}
-  function handleNameSubmit() {}
+  function handlePhotoSubmit() {
+    setEditActiveField("");
+  }
+  function handleNameSubmit() {
+    setEditActiveField("");
+  }
 
   return profileUser ? (
     <div className={styles.container}>
       <h2>Profile</h2>
       <div className={styles.info}>
         {profileUser.avatarUrl ? (
-          <img
-            src={profileUser.avatarUrl}
-            alt="profile pic"
-            className={styles.profilePic}
-          />
-        ) : null}
-        {profileUser.id === user.id ? (
-          <div className={styles.fileInput}>
-            <label htmlFor="file">
-              {profileUser.avatarUrl ? "Edit" : "Add"} profile pic:{" "}
-            </label>
-            <input
-              type="file"
-              id="file"
-              onChange={(e) => setFile(e.target.files[0])}
-              accept="image/*"
+          <div className={styles.profilePicSection}>
+            <img
+              src={profileUser.avatarUrl}
+              alt="profile pic"
+              className={styles.profilePic}
             />
-            <input type="submit" onClick={handlePhotoSubmit} />
+            {profileUser.id === user.id ? (
+              <>
+                <img
+                  src="/pencil.svg"
+                  alt="edit profile pic"
+                  className={styles.editIcon}
+                  onClick={() => setEditActiveField("photo")}
+                />
+                {editActiveField === "photo" ? (
+                  <div className={styles.fileInput}>
+                    <label htmlFor="file">
+                      {profileUser.avatarUrl ? "Edit" : "Add"} profile pic:{" "}
+                    </label>
+                    <input
+                      type="file"
+                      id="file"
+                      onChange={(e) => setFile(e.target.files[0])}
+                      accept="image/*"
+                    />
+                    <input type="submit" onClick={handlePhotoSubmit} />
+                  </div>
+                ) : null}
+              </>
+            ) : null}
           </div>
         ) : null}
-        <h3 className={styles.displayName}>
-          {profileUser.displayName}
+
+        <div className={styles.nameSection}>
+          <h3 className={styles.displayName}>{profileUser.displayName}</h3>
           {profileUser.id === user.id ? (
-            <div className={styles.nameInput}>
-              <label htmlFor="name">Edit name:</label>
-              <input
-                type="text"
-                id="name"
-                onChange={(e) => setName(e.target.value)}
+            <>
+              <img
+                src="/pencil.svg"
+                alt="edit profile pic"
+                className={styles.editIcon}
+                onClick={() => setEditActiveField("name")}
               />
-              <input type="submit" onClick={handleNameSubmit} />
-            </div>
+              {editActiveField === "name" ? (
+                <div className={styles.nameInput}>
+                  <label htmlFor="name">Edit name:</label>
+                  <input
+                    type="text"
+                    id="name"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <input type="submit" onClick={handleNameSubmit} />
+                </div>
+              ) : null}
+            </>
           ) : null}
-        </h3>
+        </div>
         <div className={styles.email}>
           <i>{profileUser.email}</i>
         </div>
