@@ -3,12 +3,14 @@ import styles from "./Posts.module.css";
 import { getPosts, submitNewPost } from "../../api/posts";
 import { HomeContext } from "../../pages/Home/Home";
 import { Post } from "../Post/Post";
+import { PostLikes } from "../PostLikes/PostLikes";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [newPostInput, setNewPostInput] = useState("");
   const [file, setFile] = useState(null);
   const [commentsActiveId, setCommentsActiveId] = useState(-1);
+  const [displayLikesId, setDisplayLikesId] = useState(-1);
 
   const { user } = useContext(HomeContext);
   const fileInputRef = useRef(null);
@@ -85,12 +87,19 @@ const Posts = () => {
               setPosts={setPosts}
               commentsActiveId={commentsActiveId}
               setCommentsActiveId={setCommentsActiveId}
+              setDisplayLikesId={setDisplayLikesId}
             />
           ))}
         </div>
       ) : (
         <p>There are no posts.</p>
       )}
+      {displayLikesId !== -1 ? (
+        <PostLikes
+          likes={posts.find((post) => post.id === displayLikesId).likes}
+          closePanel={() => setDisplayLikesId(-1)}
+        />
+      ) : null}
     </div>
   );
 };

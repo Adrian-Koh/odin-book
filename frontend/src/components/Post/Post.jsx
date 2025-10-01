@@ -11,6 +11,7 @@ const Post = ({
   setPosts,
   commentsActiveId,
   setCommentsActiveId,
+  setDisplayLikesId,
 }) => {
   const [comment, setComment] = useState("");
 
@@ -80,7 +81,10 @@ const Post = ({
         />
       ) : null}
       <div className={styles.likesComments}>
-        <div className={styles.likes}>
+        <div
+          className={styles.likes}
+          onClick={() => setDisplayLikesId(post.id)}
+        >
           <img
             src="/heart.svg"
             alt="heart"

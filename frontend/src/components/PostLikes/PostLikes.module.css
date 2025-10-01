@@ -1,0 +1,12 @@
+.container {
+  position: fixed;
+  top: 10%;
+  left: 25%;
+  border: solid 3px black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.title {
+  margin: 0;
+}
