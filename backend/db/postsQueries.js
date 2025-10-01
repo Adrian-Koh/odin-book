@@ -27,7 +27,16 @@ const getUsersPosts = async (userIds) => {
             avatarUrl: true,
           },
         },
-        likes: true,
+        likes: {
+          select: {
+            likedBy: {
+              select: {
+                displayName: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
         comments: {
           select: {
             author: {
