@@ -59,7 +59,11 @@ const Profile = () => {
             <img
               src={profileUser.avatarUrl}
               alt="profile pic"
-              className={styles.profilePic}
+              className={
+                profileUser.id === user.id
+                  ? `${styles.loggedInProfilePic}`
+                  : `${styles.profilePic}`
+              }
             />
             {profileUser.id === user.id ? (
               <>
@@ -88,8 +92,22 @@ const Profile = () => {
           </div>
         ) : null}
 
-        <div className={styles.nameSection}>
-          <h3 className={styles.displayName}>{profileUser.displayName}</h3>
+        <div
+          className={
+            profileUser.avatarUrl
+              ? `${styles.nameSection}`
+              : `${styles.nameSection} ${styles.noPicName}`
+          }
+        >
+          <h3
+            className={
+              profileUser.id === user.id
+                ? `${styles.loggedInName}`
+                : `${styles.displayName}`
+            }
+          >
+            {profileUser.displayName}
+          </h3>
           {profileUser.id === user.id ? (
             <>
               <img
@@ -120,7 +138,13 @@ const Profile = () => {
             </>
           ) : null}
         </div>
-        <div className={styles.email}>
+        <div
+          className={
+            profileUser.avatarUrl
+              ? `${styles.email}`
+              : `${styles.email} ${styles.noPicEmail}`
+          }
+        >
           <i>{profileUser.email}</i>
         </div>
       </div>

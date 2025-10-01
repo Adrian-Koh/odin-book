@@ -2,12 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./AllUsers.module.css";
 import { toggleFollowUser, getAllUsers } from "../../api/users";
 import { HomeContext } from "../../pages/Home/Home";
-import { useNavigate } from "react-router-dom";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
   const { following, fetchFollowing } = useContext(HomeContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsersCb = async () => {
