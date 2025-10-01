@@ -1,2 +1,10 @@
 html {
 }
+
+.submit {
+  width: 15px;
+  height: auto;
+  border: solid 2px black;
+  border-radius: 5px;
+  padding: 3px;
+}

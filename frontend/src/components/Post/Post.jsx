@@ -150,12 +150,14 @@ const Post = ({
               }}
               onChange={(e) => setComment(e.target.value)}
             />
-            <input
-              type="submit"
+            <img
+              src="/send.svg"
+              alt="send"
               onClick={() => {
                 handleCommentSubmit(post.id, comment);
                 setComment("");
               }}
+              className="submit"
             />
           </div>
         </div>

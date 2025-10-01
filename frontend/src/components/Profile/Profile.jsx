@@ -130,7 +130,7 @@ const Profile = () => {
                       src="/send.svg"
                       alt="send"
                       onClick={handleNameSubmit}
-                      className={styles.submit}
+                      className="submit"
                     />
                   </div>
                 </div>

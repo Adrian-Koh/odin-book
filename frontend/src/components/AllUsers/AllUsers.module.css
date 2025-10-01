@@ -60,6 +60,11 @@
   color: white;
 }
 
+.followBtn:hover,
+.followingBtn:hover {
+  box-shadow: 2px 2px 3px 3px lightblue;
+}
+
 .followIcon {
   filter: invert(99%) sepia(4%) saturate(14%) hue-rotate(67deg) brightness(104%)
     contrast(100%);

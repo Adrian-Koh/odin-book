@@ -68,7 +68,12 @@ const Posts = () => {
               setNewPostInput(e.target.value);
             }}
           />
-          <input type="submit" onClick={handleNewPostSubmit} />
+          <img
+            src="/send.svg"
+            alt="send"
+            onClick={handleNewPostSubmit}
+            className="submit"
+          />
         </div>
       </div>
       {posts && posts.length > 0 ? (
