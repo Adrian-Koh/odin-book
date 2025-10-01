@@ -112,6 +112,62 @@ async function deleteFollow(req, res, next) {
   });
 }
 
+async function profilePicPut(req, res, next) {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      let avatarUrl = null;
+      if (req.file) {
+        avatarUrl = await uploadProfilePic(user.email, req.file);
+      } else {
+        return next(new Error("No file provided for profile pic update."));
+      }
+      const updatedUser = await usersQueries.updateProfilePic(
+        user.id,
+        avatarUrl
+      );
+
+      jwt.sign(
+        { user: updatedUser },
+        process.env.SECRET_KEY,
+        { expiresIn: "7d" },
+        (err, token) => {
+          if (err) {
+            return next(err);
+          }
+          res.json({ token });
+        }
+      );
+    }
+  });
+}
+
+async function profileNamePut(req, res, next) {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const { name } = req.body;
+      const updatedUser = await usersQueries.updateDisplayName(user.id, name);
+
+      jwt.sign(
+        { user: updatedUser },
+        process.env.SECRET_KEY,
+        { expiresIn: "7d" },
+        (err, token) => {
+          if (err) {
+            return next(err);
+          }
+          res.json({ token });
+        }
+      );
+    }
+  });
+}
+
 module.exports = {
   getAllUsers,
   getFollowingUsers,
@@ -119,4 +175,6 @@ module.exports = {
   signupPost,
   postFollow,
   deleteFollow,
+  profilePicPut,
+  profileNamePut,
 };

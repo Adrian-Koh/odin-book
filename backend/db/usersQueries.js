@@ -95,6 +95,26 @@ const removeFollow = async (followerId, followingId) => {
   });
 };
 
+const updateProfilePic = async (userId, avatarUrl) => {
+  const user = await prisma.user.update({
+    where: { id: Number(userId) },
+    data: {
+      avatarUrl,
+    },
+  });
+  return user;
+};
+
+const updateDisplayName = async (userId, displayName) => {
+  const user = await prisma.user.update({
+    where: { id: Number(userId) },
+    data: {
+      displayName,
+    },
+  });
+  return user;
+};
+
 module.exports = {
   addUserGithub,
   addUserEmail,
@@ -104,4 +124,6 @@ module.exports = {
   getUserFollowing,
   addFollow,
   removeFollow,
+  updateProfilePic,
+  updateDisplayName,
 };

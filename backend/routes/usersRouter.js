@@ -19,5 +19,12 @@ usersRouter.delete(
   verifyToken,
   usersController.deleteFollow
 );
+usersRouter.put(
+  "/profile/pic",
+  verifyToken,
+  upload.single("file"),
+  usersController.profilePicPut
+);
+usersRouter.put("/profile/name", verifyToken, usersController.profileNamePut);
 
 module.exports = usersRouter;
