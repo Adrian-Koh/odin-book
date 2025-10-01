@@ -48,7 +48,15 @@ export default function Home() {
           {user ? (
             <>
               <Link to="users">Users</Link>
-              <Link to="profile">Profile</Link>
+              <Link to="profile" className={styles.profileLink}>
+                <img
+                  src={user.avatarUrl ? user.avatarUrl : "/account-circle.svg"}
+                  className={
+                    user.avatarUrl ? styles.profilePic : styles.accountIcon
+                  }
+                />
+                Profile
+              </Link>
               <img
                 src="/logout-variant.svg"
                 alt="logout"

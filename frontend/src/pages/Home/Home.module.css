@@ -62,3 +62,21 @@
   padding: 3px;
   border-radius: 5px;
 }
+
+.profileLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.profilePic {
+  width: 50px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.accountIcon {
+  width: 30px;
+  height: auto;
+  border-radius: 5px;
+}
