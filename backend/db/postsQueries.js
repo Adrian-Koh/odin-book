@@ -31,6 +31,7 @@ const getUsersPosts = async (userIds) => {
           select: {
             likedBy: {
               select: {
+                id: true,
                 displayName: true,
                 avatarUrl: true,
               },
