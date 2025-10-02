@@ -89,7 +89,8 @@ const Post = ({
             src="/heart.svg"
             alt="heart"
             className={
-              post.likes.filter((like) => like.likedById === user.id).length > 0
+              post.likes.filter((like) => like.likedBy.id === user.id).length >
+              0
                 ? `${styles.likeIcon} ${styles.liked}`
                 : `${styles.likeIcon}`
             }
