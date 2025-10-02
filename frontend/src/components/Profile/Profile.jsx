@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./Profile.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { Post } from "../Post/Post";
+import { PostLikes } from "../PostLikes/PostLikes";
 import { getUserPosts } from "../../api/posts";
 import { useSearchParams } from "react-router-dom";
 import { submitName, submitProfilePic } from "../../api/profile";
@@ -14,6 +15,7 @@ const Profile = () => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [editActiveField, setEditActiveField] = useState("");
+  const [displayLikesId, setDisplayLikesId] = useState(-1);
   const { user, following, setUser } = useContext(HomeContext);
   const [searchParams] = useSearchParams();
 
@@ -159,6 +161,7 @@ const Profile = () => {
                 setPosts={setPosts}
                 commentsActiveId={commentsActiveId}
                 setCommentsActiveId={setCommentsActiveId}
+                setDisplayLikesId={setDisplayLikesId}
               />
             ))}
           </div>
@@ -166,6 +169,12 @@ const Profile = () => {
       ) : (
         <p>This user has no posts.</p>
       )}
+      {displayLikesId !== -1 ? (
+        <PostLikes
+          likes={posts.find((post) => post.id === displayLikesId).likes}
+          closePanel={() => setDisplayLikesId(-1)}
+        />
+      ) : null}
     </div>
   ) : (
     <p>No user</p>

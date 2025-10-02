@@ -23,9 +23,9 @@ const Post = ({
     for (const post of newPosts) {
       if (post.id === postId) {
         if (like) {
-          post.likes.push({ likedById: user.id, postId });
+          post.likes.push({ likedBy: user, postId });
         } else {
-          post.likes = post.likes.filter((like) => like.likedById !== user.id);
+          post.likes = post.likes.filter((like) => like.likedBy.id !== user.id);
         }
       }
     }
@@ -81,10 +81,7 @@ const Post = ({
         />
       ) : null}
       <div className={styles.likesComments}>
-        <div
-          className={styles.likes}
-          onClick={() => setDisplayLikesId(post.id)}
-        >
+        <div className={styles.likes}>
           <img
             src="/heart.svg"
             alt="heart"
@@ -97,7 +94,7 @@ const Post = ({
             onClick={() =>
               handleLikeClick(
                 post.id,
-                !post.likes.filter((like) => like.likedById === user.id)
+                !post.likes.filter((like) => like.likedBy.id === user.id)
                   .length > 0
               )
             }
@@ -115,6 +112,12 @@ const Post = ({
           />
           {post.comments.length}
         </div>
+      </div>
+      <div
+        className={styles.viewLikes}
+        onClick={() => setDisplayLikesId(post.id)}
+      >
+        View likes
       </div>
       {commentsActiveId === post.id ? (
         <div className={styles.commentSection}>
