@@ -48,8 +48,13 @@
   grid-column: 1 / 3;
   grid-row: 3 / 4;
   justify-self: center;
-  font-size: 1.2rem;
+  display: flex;
+  gap: 5px;
   padding: 10px 0;
+}
+
+.captionText {
+  font-size: 1.2rem;
 }
 
 .postImage {
@@ -157,4 +162,9 @@
   padding: 3px;
   border-radius: 5px;
   font-weight: 600;
+}
+
+.editPost {
+  width: 20px;
+  height: auto;
 }

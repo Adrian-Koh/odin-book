@@ -8,3 +8,15 @@ html {
   border-radius: 5px;
   padding: 3px;
 }
+
+.editIcon {
+  width: 15px;
+  height: auto;
+  border: solid 2px black;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.editIcon:hover {
+  box-shadow: 0 0 3px 3px grey;
+}

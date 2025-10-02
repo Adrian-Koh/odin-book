@@ -71,7 +71,10 @@ const Post = ({
         </div>
       </div>
       <div className={styles.caption}>
-        <i>{post.caption}</i>
+        <i className={styles.captionText}>{post.caption}</i>
+        {post.authorId === user.id ? (
+          <img src="/pencil.svg" className="editIcon" />
+        ) : null}
       </div>
       {post.photoUrl ? (
         <img
