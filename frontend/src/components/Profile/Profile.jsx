@@ -24,6 +24,7 @@ const Profile = () => {
       if (profileUser) {
         const fetchedPosts = await getUserPosts(profileUser.id);
         setPosts(fetchedPosts);
+        setName(profileUser.displayName);
       }
     };
     fetchPosts();

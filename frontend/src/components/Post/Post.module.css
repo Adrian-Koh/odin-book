@@ -49,8 +49,15 @@
   grid-row: 3 / 4;
   justify-self: center;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 5px;
   padding: 10px 0;
+}
+
+.captionRow {
+  display: flex;
+  gap: 5px;
 }
 
 .captionText {
@@ -167,4 +174,10 @@
 .editPost {
   width: 20px;
   height: auto;
+}
+
+.editPostInput {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

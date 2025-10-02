@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./Post.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { getTimeSincePost } from "../../utils/timeUtils";
@@ -14,8 +14,15 @@ const Post = ({
   setDisplayLikesId,
 }) => {
   const [comment, setComment] = useState("");
-
+  const [editPostActive, setEditPostActive] = useState(false);
+  const [postInput, setPostInput] = useState("");
   const { user } = useContext(HomeContext);
+
+  useEffect(() => {
+    if (post) {
+      setPostInput(post.caption);
+    }
+  }, [post]);
 
   async function handleLikeClick(postId, like) {
     await togglePostLike(postId, like);
@@ -44,6 +51,8 @@ const Post = ({
     setPosts(newPosts);
   }
 
+  async function submitEditPost() {}
+
   return (
     <div className={styles.post} key={post.id}>
       <img
@@ -71,9 +80,25 @@ const Post = ({
         </div>
       </div>
       <div className={styles.caption}>
-        <i className={styles.captionText}>{post.caption}</i>
-        {post.authorId === user.id ? (
-          <img src="/pencil.svg" className="editIcon" />
+        <div className={styles.captionRow}>
+          <i className={styles.captionText}>{post.caption}</i>
+          {post.authorId === user.id ? (
+            <img
+              src="/pencil.svg"
+              className="editIcon"
+              onClick={() => setEditPostActive(!editPostActive)}
+            />
+          ) : null}
+        </div>
+        {editPostActive ? (
+          <div className={styles.editPostInput}>
+            <input
+              type="text"
+              value={postInput}
+              onChange={(e) => setPostInput(e.target.value)}
+            />
+            <img src="/send.svg" className="submit" onClick={submitEditPost} />
+          </div>
         ) : null}
       </div>
       {post.photoUrl ? (
