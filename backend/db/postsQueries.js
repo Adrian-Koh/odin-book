@@ -1,5 +1,41 @@
 const prisma = require("./prismaClient");
 
+const postIncludeData = {
+  author: {
+    select: {
+      id: true,
+      email: true,
+      displayName: true,
+      avatarUrl: true,
+    },
+  },
+  likes: {
+    select: {
+      likedBy: {
+        select: {
+          id: true,
+          displayName: true,
+          avatarUrl: true,
+        },
+      },
+    },
+  },
+  comments: {
+    select: {
+      author: {
+        select: {
+          displayName: true,
+          email: true,
+          avatarUrl: true,
+        },
+      },
+      id: true,
+      text: true,
+      addedTime: true,
+    },
+  },
+};
+
 const createPost = async (authorId, caption, photoUrl = null) => {
   const createdPost = await prisma.post.create({
     data: {
@@ -11,6 +47,18 @@ const createPost = async (authorId, caption, photoUrl = null) => {
   return createdPost;
 };
 
+const editPost = async (postId, caption) => {
+  const editedPost = await prisma.post.update({
+    where: { id: Number(postId) },
+    data: {
+      caption,
+      editedTime: new Date(),
+    },
+    include: postIncludeData,
+  });
+  return editedPost;
+};
+
 const getUsersPosts = async (userIds) => {
   const posts = [];
   for (const userid of userIds) {
@@ -18,41 +66,7 @@ const getUsersPosts = async (userIds) => {
       where: {
         authorId: Number(userid),
       },
-      include: {
-        author: {
-          select: {
-            id: true,
-            email: true,
-            displayName: true,
-            avatarUrl: true,
-          },
-        },
-        likes: {
-          select: {
-            likedBy: {
-              select: {
-                id: true,
-                displayName: true,
-                avatarUrl: true,
-              },
-            },
-          },
-        },
-        comments: {
-          select: {
-            author: {
-              select: {
-                displayName: true,
-                email: true,
-                avatarUrl: true,
-              },
-            },
-            id: true,
-            text: true,
-            addedTime: true,
-          },
-        },
-      },
+      include: postIncludeData,
     });
     userPosts.forEach((post) => posts.push(post));
   }
@@ -77,4 +91,4 @@ const unlikePost = async (userId, postId) => {
   });
 };
 
-module.exports = { createPost, getUsersPosts, likePost, unlikePost };
+module.exports = { createPost, editPost, getUsersPosts, likePost, unlikePost };

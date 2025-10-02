@@ -23,6 +23,19 @@ const createPost = async (req, res, next) => {
   });
 };
 
+const editPost = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const { postId } = req.params;
+      const { caption } = req.body;
+      const editedPost = await postsQueries.editPost(postId, caption);
+      res.json({ message: "successfully edited post", editedPost });
+    }
+  });
+};
+
 const getFollowingPosts = async (req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
     if (err) {
@@ -81,6 +94,7 @@ const unlikePost = async (req, res, next) => {
 
 module.exports = {
   createPost,
+  editPost,
   getFollowingPosts,
   getUserPosts,
   likePost,
