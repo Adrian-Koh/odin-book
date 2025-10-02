@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./Post.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { getTimeSincePost } from "../../utils/timeUtils";
-import { togglePostLike } from "../../api/posts";
+import { editPost, togglePostLike } from "../../api/posts";
 import { getPostComments, submitComment } from "../../api/comments";
 
 const Post = ({
@@ -24,13 +24,13 @@ const Post = ({
     }
   }, [post]);
 
-  async function handleLikeClick(postId, like) {
-    await togglePostLike(postId, like);
+  async function handleLikeClick(like) {
+    await togglePostLike(post.id, like);
     const newPosts = [...posts];
-    for (const post of newPosts) {
-      if (post.id === postId) {
+    for (const newPost of newPosts) {
+      if (post.id === newPost.id) {
         if (like) {
-          post.likes.push({ likedBy: user, postId });
+          post.likes.push({ likedBy: user });
         } else {
           post.likes = post.likes.filter((like) => like.likedBy.id !== user.id);
         }
@@ -39,19 +39,29 @@ const Post = ({
     setPosts(newPosts);
   }
 
-  async function handleCommentSubmit(postId, comment) {
-    await submitComment(postId, comment);
+  async function handleCommentSubmit() {
+    await submitComment(post.id, comment);
     const newPosts = [...posts];
-    for (const post of newPosts) {
-      if (post.id === postId) {
-        const comments = await getPostComments(postId);
+    for (const newPost of newPosts) {
+      if (post.id === newPost.id) {
+        const comments = await getPostComments(post.id);
         post.comments = comments;
       }
     }
     setPosts(newPosts);
   }
 
-  async function submitEditPost() {}
+  async function submitEditPost() {
+    const editedPost = await editPost(post.id, postInput);
+    let newPosts = [...posts];
+    for (let i = 0; i < newPosts.length; i++) {
+      if (newPosts[i].id === editedPost.id) {
+        newPosts[i] = editedPost;
+      }
+    }
+    setPosts(newPosts);
+    setEditPostActive(false);
+  }
 
   return (
     <div className={styles.post} key={post.id}>
@@ -121,7 +131,6 @@ const Post = ({
             }
             onClick={() =>
               handleLikeClick(
-                post.id,
                 !post.likes.filter((like) => like.likedBy.id === user.id)
                   .length > 0
               )

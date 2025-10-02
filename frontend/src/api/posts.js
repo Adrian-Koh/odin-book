@@ -64,3 +64,20 @@ export const submitNewPost = async (caption, file = null) => {
     throw new Error(parsed.message);
   }
 };
+
+export const editPost = async (postId, caption) => {
+  const response = await fetch(BACKEND_DOMAIN + `/${postId}`, {
+    headers: { "Content-Type": "application/json", ...getTokenHeader() },
+    method: "PUT",
+    body: JSON.stringify({ caption }),
+  });
+
+  const parsed = await response.json();
+  console.log("parsed response from edit post: " + JSON.stringify(parsed));
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+
+  return parsed.editedPost;
+};
