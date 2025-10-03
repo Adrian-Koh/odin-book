@@ -32,7 +32,11 @@ const FollowingUsers = () => {
                   : "/face-man-profile.svg"
               }
               alt="profile pic"
-              className={styles.profilePic}
+              className={
+                follow.following.avatarUrl
+                  ? styles.profilePic
+                  : `${styles.profilePic} genericPic`
+              }
             ></img>
             <div className={styles.displayName}>
               {follow.following.displayName}

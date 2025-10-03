@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
   justify-items: center;
-  border: solid 3px black;
+  border: var(--border);
   border-radius: 10px;
   padding: 20px;
   gap: 10px;
@@ -132,7 +132,7 @@
   display: grid;
   grid-template-columns: 1fr max-content;
   align-items: center;
-  border: solid 2px black;
+  border: var(--border);
   border-radius: 10px;
   padding: 10px;
   gap: 10px;

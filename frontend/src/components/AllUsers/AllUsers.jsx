@@ -30,7 +30,11 @@ const AllUsers = () => {
             <img
               src={user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"}
               alt="profile pic"
-              className={styles.profilePic}
+              className={
+                user.avatarUrl
+                  ? styles.profilePic
+                  : `${styles.profilePic} genericPic`
+              }
             ></img>
             <div className={styles.displayName}>{user.displayName}</div>
             <div className={styles.email}>{user.email}</div>

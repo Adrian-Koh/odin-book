@@ -72,7 +72,11 @@ const Post = ({
             : "/face-man-profile.svg"
         }
         alt="profile pic"
-        className={styles.profilePic}
+        className={
+          post.author.avatarUrl
+            ? styles.profilePic
+            : `${styles.profilePic} genericPic`
+        }
       ></img>
       <div className={styles.authorTime}>
         <div className={styles.author}>
@@ -105,6 +109,11 @@ const Post = ({
             <input
               type="text"
               value={postInput}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  submitEditPost();
+                }
+              }}
               onChange={(e) => setPostInput(e.target.value)}
             />
             <img src="/send.svg" className="submit" onClick={submitEditPost} />
@@ -169,7 +178,11 @@ const Post = ({
                         ? comment.author.avatarUrl
                         : "/face-man-profile.svg"
                     }
-                    className={styles.commentPic}
+                    className={
+                      comment.author.avatarUrl
+                        ? styles.commentPic
+                        : `${styles.commentPic} genericPic`
+                    }
                   />
                   <div className={styles.commentAuthor}>
                     <b>{comment.author.displayName}</b>{" "}

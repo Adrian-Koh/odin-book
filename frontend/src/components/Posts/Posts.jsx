@@ -43,7 +43,11 @@ const Posts = () => {
             user && user.avatarUrl ? user.avatarUrl : "/face-man-profile.svg"
           }
           alt="logged in pic"
-          className={styles.loggedInPic}
+          className={
+            user && user.avatarUrl
+              ? styles.loggedInPic
+              : `${styles.loggedInPic} genericPic`
+          }
         />
         <h3 className={styles.newPostTitle}>Create new post</h3>
         <div className={styles.fileInput}>

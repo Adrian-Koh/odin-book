@@ -9,8 +9,8 @@
 }
 
 .user {
-  border: solid 2px black;
-  border-radius: 5px;
+  border: var(--border);
+  border-radius: var(--border-radius);
   padding: 5px;
   display: grid;
   align-items: center;

@@ -1,22 +1,41 @@
+:root {
+  --border: solid 2px white;
+  --border-radius: 5px;
+  --svg-filter: invert(100%) sepia(0%) saturate(7495%) hue-rotate(161deg)
+    brightness(103%) contrast(106%);
+  --bg-color: rgb(54, 54, 54);
+}
+
 html {
+  font-family: "Chelsea Market", system-ui;
+  background-color: var(--bg-color);
+  color: white;
 }
 
 .submit {
   width: 15px;
   height: auto;
-  border: solid 2px black;
-  border-radius: 5px;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  border-color: black;
+  filter: var(--svg-filter);
   padding: 3px;
 }
 
 .editIcon {
   width: 15px;
   height: auto;
-  border: solid 2px black;
-  border-radius: 5px;
+  border: var(--border);
+  border-color: black;
+  border-radius: var(--border-radius);
+  filter: var(--svg-filter);
   padding: 2px;
 }
 
 .editIcon:hover {
   box-shadow: 0 0 3px 3px grey;
+}
+
+.genericPic {
+  filter: var(--svg-filter);
 }
