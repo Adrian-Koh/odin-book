@@ -97,11 +97,14 @@ const Post = ({
         <div className={styles.captionRow}>
           <i className={styles.captionText}>{post.caption}</i>
           {post.authorId === user.id ? (
-            <img
-              src="/pencil.svg"
-              className="editIcon"
-              onClick={() => setEditPostActive(!editPostActive)}
-            />
+            <>
+              <img
+                src="/pencil.svg"
+                className="actionIcon"
+                onClick={() => setEditPostActive(!editPostActive)}
+              />
+              <img src="/delete.svg" className="actionIcon" />
+            </>
           ) : null}
         </div>
         {editPostActive ? (
@@ -116,7 +119,11 @@ const Post = ({
               }}
               onChange={(e) => setPostInput(e.target.value)}
             />
-            <img src="/send.svg" className="submit" onClick={submitEditPost} />
+            <img
+              src="/send.svg"
+              className="actionIcon"
+              onClick={submitEditPost}
+            />
           </div>
         ) : null}
       </div>
@@ -215,7 +222,7 @@ const Post = ({
                 handleCommentSubmit(post.id, comment);
                 setComment("");
               }}
-              className="submit"
+              className="actionIcon"
             />
           </div>
         </div>

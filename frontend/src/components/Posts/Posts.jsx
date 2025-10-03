@@ -78,7 +78,7 @@ const Posts = () => {
             src="/send.svg"
             alt="send"
             onClick={handleNewPostSubmit}
-            className="submit"
+            className="actionIcon"
           />
         </div>
       </div>

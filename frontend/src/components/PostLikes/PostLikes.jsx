@@ -19,7 +19,11 @@ const PostLikes = ({ likes, closePanel }) => {
                   ? like.likedBy.avatarUrl
                   : "/face-man-profile.svg"
               }
-              className={styles.profilePic}
+              className={
+                like.likedBy.avatarUrl
+                  ? styles.profilePic
+                  : `${styles.profilePic} genericPic`
+              }
             />
             <div className={styles.name}>{like.likedBy.displayName}</div>
           </div>

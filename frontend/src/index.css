@@ -12,17 +12,7 @@ html {
   color: white;
 }
 
-.submit {
-  width: 15px;
-  height: auto;
-  border: var(--border);
-  border-radius: var(--border-radius);
-  border-color: black;
-  filter: var(--svg-filter);
-  padding: 3px;
-}
-
-.editIcon {
+.actionIcon {
   width: 15px;
   height: auto;
   border: var(--border);
@@ -32,7 +22,7 @@ html {
   padding: 2px;
 }
 
-.editIcon:hover {
+.actionIcon:hover {
   box-shadow: 0 0 3px 3px grey;
 }
 

@@ -73,7 +73,7 @@ const Profile = () => {
                 <img
                   src="/pencil.svg"
                   alt="edit profile pic"
-                  className="editIcon"
+                  className="actionIcon"
                   onClick={() => setEditActiveField("photo")}
                 />
                 {editActiveField === "photo" ? (
@@ -116,7 +116,7 @@ const Profile = () => {
               <img
                 src="/pencil.svg"
                 alt="edit profile pic"
-                className="editIcon"
+                className="actionIcon"
                 onClick={() => setEditActiveField("name")}
               />
               {editActiveField === "name" ? (
@@ -133,7 +133,7 @@ const Profile = () => {
                       src="/send.svg"
                       alt="send"
                       onClick={handleNameSubmit}
-                      className="submit"
+                      className="actionIcon"
                     />
                   </div>
                 </div>
