@@ -208,6 +208,12 @@ const Post = ({
                     </span>
                   </div>
                   <div className={styles.commentText}>{comment.text}</div>
+                  {comment.author.id === user.id ? (
+                    <div className={styles.actionIcons}>
+                      <img src="/pencil.svg" className="actionIcon" />
+                      <img src="/delete.svg" className="actionIcon" />
+                    </div>
+                  ) : null}
                 </div>
               ))}
             </>
