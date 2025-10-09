@@ -48,4 +48,5 @@
 .githubIcon {
   height: 30px;
   width: auto;
+  filter: var(--svg-filter);
 }

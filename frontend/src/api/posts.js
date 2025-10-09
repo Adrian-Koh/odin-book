@@ -81,3 +81,17 @@ export const editPost = async (postId, caption) => {
 
   return parsed.editedPost;
 };
+
+export const deletePost = async (postId) => {
+  const response = await fetch(BACKEND_DOMAIN + `/${postId}`, {
+    headers: getTokenHeader(),
+    method: "DELETE",
+  });
+
+  const parsed = await response.json();
+  console.log("parsed response from delete post: " + JSON.stringify(parsed));
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+};

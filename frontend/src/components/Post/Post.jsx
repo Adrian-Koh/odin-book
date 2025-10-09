@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./Post.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { getTimeSincePost } from "../../utils/timeUtils";
-import { editPost, togglePostLike } from "../../api/posts";
+import { deletePost, editPost, togglePostLike } from "../../api/posts";
 import { getPostComments, submitComment } from "../../api/comments";
 
 const Post = ({
@@ -63,6 +63,12 @@ const Post = ({
     setEditPostActive(false);
   }
 
+  async function handleDeletePost() {
+    await deletePost(post.id);
+    const newPosts = posts.filter((newPost) => newPost.id !== post.id);
+    setPosts(newPosts);
+  }
+
   return (
     <div className={styles.post} key={post.id}>
       <img
@@ -86,10 +92,10 @@ const Post = ({
         <div className={styles.postTime}>
           {post.editedTime ? (
             <>
-              {getTimeSincePost(post.editedTime)} ago <i>(edited)</i>
+              {getTimeSincePost(post.editedTime)} <i>(edited)</i>
             </>
           ) : (
-            <>{getTimeSincePost(post.addedTime)} ago</>
+            <>{getTimeSincePost(post.addedTime)}</>
           )}
         </div>
       </div>
@@ -103,7 +109,11 @@ const Post = ({
                 className="actionIcon"
                 onClick={() => setEditPostActive(!editPostActive)}
               />
-              <img src="/delete.svg" className="actionIcon" />
+              <img
+                src="/delete.svg"
+                className="actionIcon"
+                onClick={handleDeletePost}
+              />
             </>
           ) : null}
         </div>
