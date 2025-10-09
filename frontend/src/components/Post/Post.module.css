@@ -200,3 +200,13 @@
   justify-self: flex-end;
   gap: 5px;
 }
+
+.editCommentSection {
+  display: flex;
+  grid-column: 1 / 4;
+  width: 100%;
+  gap: 5px;
+}
+.editCommentSection input {
+  width: 90%;
+}

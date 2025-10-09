@@ -3,7 +3,11 @@ import styles from "./Post.module.css";
 import { HomeContext } from "../../pages/Home/Home";
 import { getTimeSincePost } from "../../utils/timeUtils";
 import { deletePost, editPost, togglePostLike } from "../../api/posts";
-import { getPostComments, submitComment } from "../../api/comments";
+import {
+  getPostComments,
+  submitComment,
+  editComment,
+} from "../../api/comments";
 
 const Post = ({
   post,
@@ -16,6 +20,8 @@ const Post = ({
   const [comment, setComment] = useState("");
   const [editPostActive, setEditPostActive] = useState(false);
   const [postInput, setPostInput] = useState("");
+  const [editCommentId, setEditCommentId] = useState(-1);
+  const [editCommentInput, setEditCommentInput] = useState("");
   const { user } = useContext(HomeContext);
 
   useEffect(() => {
@@ -39,8 +45,7 @@ const Post = ({
     setPosts(newPosts);
   }
 
-  async function handleCommentSubmit() {
-    await submitComment(post.id, comment);
+  const refreshComments = async () => {
     const newPosts = [...posts];
     for (const newPost of newPosts) {
       if (post.id === newPost.id) {
@@ -49,6 +54,19 @@ const Post = ({
       }
     }
     setPosts(newPosts);
+  };
+
+  async function handleCommentSubmit() {
+    await submitComment(post.id, comment);
+    refreshComments();
+    setComment("");
+  }
+
+  async function handleCommentEdit() {
+    await editComment(post.id, editCommentId, editCommentInput);
+    refreshComments();
+    setEditCommentId(-1);
+    setEditCommentInput("");
   }
 
   async function submitEditPost() {
@@ -210,8 +228,35 @@ const Post = ({
                   <div className={styles.commentText}>{comment.text}</div>
                   {comment.author.id === user.id ? (
                     <div className={styles.actionIcons}>
-                      <img src="/pencil.svg" className="actionIcon" />
+                      <img
+                        src="/pencil.svg"
+                        className="actionIcon"
+                        onClick={() => {
+                          setEditCommentId(comment.id);
+                          setEditCommentInput(comment.text);
+                        }}
+                      />
                       <img src="/delete.svg" className="actionIcon" />
+                    </div>
+                  ) : null}
+                  {editCommentId === comment.id ? (
+                    <div className={styles.editCommentSection}>
+                      <input
+                        type="text"
+                        value={editCommentInput}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            handleCommentEdit();
+                          }
+                        }}
+                        onChange={(e) => setEditCommentInput(e.target.value)}
+                      />
+                      <img
+                        src="/send.svg"
+                        alt="send"
+                        onClick={handleCommentEdit}
+                        className="actionIcon"
+                      />
                     </div>
                   ) : null}
                 </div>
@@ -225,8 +270,7 @@ const Post = ({
               value={comment}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  handleCommentSubmit(post.id, comment);
-                  setComment("");
+                  handleCommentSubmit();
                 }
               }}
               onChange={(e) => setComment(e.target.value)}
@@ -234,10 +278,7 @@ const Post = ({
             <img
               src="/send.svg"
               alt="send"
-              onClick={() => {
-                handleCommentSubmit(post.id, comment);
-                setComment("");
-              }}
+              onClick={handleCommentSubmit}
               className="actionIcon"
             />
           </div>

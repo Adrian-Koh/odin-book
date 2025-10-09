@@ -32,3 +32,21 @@ export const getPostComments = async (postId) => {
 
   return parsed.comments;
 };
+
+export const editComment = async (postId, commentId, comment) => {
+  const response = await fetch(
+    BACKEND_DOMAIN + `/${postId}/comments/${commentId}`,
+    {
+      headers: { "Content-Type": "application/json", ...getTokenHeader() },
+      method: "PUT",
+      body: JSON.stringify({ comment }),
+    }
+  );
+
+  const parsed = await response.json();
+  console.log("parsed response from edit comment: " + JSON.stringify(parsed));
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+};
