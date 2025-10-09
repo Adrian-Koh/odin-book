@@ -36,6 +36,18 @@ const editPost = async (req, res, next) => {
   });
 };
 
+const deletePost = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const { postId } = req.params;
+      await postsQueries.deletePost(postId);
+      res.json({ message: "successfully deleted post" });
+    }
+  });
+};
+
 const getFollowingPosts = async (req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
     if (err) {
@@ -95,6 +107,7 @@ const unlikePost = async (req, res, next) => {
 module.exports = {
   createPost,
   editPost,
+  deletePost,
   getFollowingPosts,
   getUserPosts,
   likePost,

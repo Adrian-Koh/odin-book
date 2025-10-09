@@ -14,6 +14,7 @@ postsRouter.post(
   postsController.createPost
 );
 postsRouter.put("/:postId", verifyToken, postsController.editPost);
+postsRouter.delete("/:postId", verifyToken, postsController.deletePost);
 postsRouter.post("/:postId/like", verifyToken, postsController.likePost);
 postsRouter.delete("/:postId/like", verifyToken, postsController.unlikePost);
 

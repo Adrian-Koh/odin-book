@@ -59,6 +59,12 @@ const editPost = async (postId, caption) => {
   return editedPost;
 };
 
+const deletePost = async (postId) => {
+  await prisma.post.delete({
+    where: { id: Number(postId) },
+  });
+};
+
 const getUsersPosts = async (userIds) => {
   const posts = [];
   for (const userid of userIds) {
@@ -91,4 +97,11 @@ const unlikePost = async (userId, postId) => {
   });
 };
 
-module.exports = { createPost, editPost, getUsersPosts, likePost, unlikePost };
+module.exports = {
+  createPost,
+  editPost,
+  deletePost,
+  getUsersPosts,
+  likePost,
+  unlikePost,
+};
