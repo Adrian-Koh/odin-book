@@ -24,6 +24,7 @@ const postIncludeData = {
     select: {
       author: {
         select: {
+          id: true,
           displayName: true,
           email: true,
           avatarUrl: true,
