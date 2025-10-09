@@ -11,6 +11,27 @@ const createComment = async (authorId, postId, text) => {
   return createdComment;
 };
 
+const editComment = async (commentId, text) => {
+  const updatedComment = await prisma.comment.update({
+    where: {
+      id: Number(commentId),
+    },
+    data: {
+      text,
+      editedTime: new Date(),
+    },
+  });
+  return updatedComment;
+};
+
+const deleteComment = async (commentId) => {
+  await prisma.comment.delete({
+    where: {
+      id: Number(commentId),
+    },
+  });
+};
+
 const getPostComments = async (postId) => {
   const comments = await prisma.comment.findMany({
     where: {
@@ -28,10 +49,11 @@ const getPostComments = async (postId) => {
       id: true,
       text: true,
       addedTime: true,
+      editedTime: true,
     },
   });
   comments.sort((a, b) => a.id - b.id);
   return comments;
 };
 
-module.exports = { createComment, getPostComments };
+module.exports = { createComment, editComment, deleteComment, getPostComments };

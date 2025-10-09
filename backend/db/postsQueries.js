@@ -78,6 +78,9 @@ const getUsersPosts = async (userIds) => {
     userPosts.forEach((post) => posts.push(post));
   }
   posts.sort((a, b) => b.id - a.id);
+  for (const post of posts) {
+    post.comments.sort((a, b) => a.id - b.id);
+  }
   return posts;
 };
 

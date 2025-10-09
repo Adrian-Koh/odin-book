@@ -19,6 +19,34 @@ const createComment = async (req, res, next) => {
   });
 };
 
+const editComment = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const { commentId } = req.params;
+      const { comment } = req.body;
+      const updatedComment = await commentsQueries.editComment(
+        commentId,
+        comment
+      );
+      res.json({ updatedComment });
+    }
+  });
+};
+
+const deleteComment = async (req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const { commentId } = req.params;
+      await commentsQueries.deleteComment(commentId);
+      res.json({ message: "successfully deleted comment" });
+    }
+  });
+};
+
 const getPostComments = async (req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
     if (err) {
@@ -31,4 +59,4 @@ const getPostComments = async (req, res, next) => {
   });
 };
 
-module.exports = { createComment, getPostComments };
+module.exports = { createComment, editComment, deleteComment, getPostComments };

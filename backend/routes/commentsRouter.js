@@ -13,5 +13,15 @@ commentsRouter.post(
   verifyToken,
   commentsController.createComment
 );
+commentsRouter.put(
+  "/:postId/comments/:commentId",
+  verifyToken,
+  commentsController.editComment
+);
+commentsRouter.delete(
+  "/:postId/comments/:commentId",
+  verifyToken,
+  commentsController.deleteComment
+);
 
 module.exports = commentsRouter;
