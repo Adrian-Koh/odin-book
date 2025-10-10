@@ -30,6 +30,11 @@ const editPost = async (req, res, next) => {
     } else {
       const { postId } = req.params;
       const { caption } = req.body;
+
+      const authorId = await postsQueries.getPostAuthorId(postId);
+      if (authorId !== authData.user.id)
+        return next(new Error("Cannot edit post user did not create."));
+
       const editedPost = await postsQueries.editPost(postId, caption);
       res.json({ message: "successfully edited post", editedPost });
     }
@@ -42,6 +47,11 @@ const deletePost = async (req, res, next) => {
       return next(err);
     } else {
       const { postId } = req.params;
+
+      const authorId = await postsQueries.getPostAuthorId(postId);
+      if (authorId !== authData.user.id)
+        return next(new Error("Cannot delete post user did not create."));
+
       await postsQueries.deletePost(postId);
       res.json({ message: "successfully deleted post" });
     }

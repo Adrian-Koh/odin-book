@@ -61,6 +61,18 @@ const editPost = async (postId, caption) => {
 };
 
 const deletePost = async (postId) => {
+  await prisma.comment.deleteMany({
+    where: {
+      postId: Number(postId),
+    },
+  });
+
+  await prisma.postLike.deleteMany({
+    where: {
+      postId: Number(postId),
+    },
+  });
+
   await prisma.post.delete({
     where: { id: Number(postId) },
   });
@@ -101,6 +113,15 @@ const unlikePost = async (userId, postId) => {
   });
 };
 
+const getPostAuthorId = async (postId) => {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: Number(postId),
+    },
+  });
+  return post.authorId;
+};
+
 module.exports = {
   createPost,
   editPost,
@@ -108,4 +129,5 @@ module.exports = {
   getUsersPosts,
   likePost,
   unlikePost,
+  getPostAuthorId,
 };
