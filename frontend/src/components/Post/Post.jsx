@@ -7,6 +7,7 @@ import {
   getPostComments,
   submitComment,
   editComment,
+  deleteComment,
 } from "../../api/comments";
 
 const Post = ({
@@ -67,6 +68,11 @@ const Post = ({
     refreshComments();
     setEditCommentId(-1);
     setEditCommentInput("");
+  }
+
+  async function handleCommentDelete(commentId) {
+    await deleteComment(post.id, commentId);
+    refreshComments();
   }
 
   async function submitEditPost() {
@@ -236,7 +242,11 @@ const Post = ({
                           setEditCommentInput(comment.text);
                         }}
                       />
-                      <img src="/delete.svg" className="actionIcon" />
+                      <img
+                        src="/delete.svg"
+                        className="actionIcon"
+                        onClick={() => handleCommentDelete(comment.id)}
+                      />
                     </div>
                   ) : null}
                   {editCommentId === comment.id ? (

@@ -50,3 +50,20 @@ export const editComment = async (postId, commentId, comment) => {
     throw new Error(parsed.message);
   }
 };
+
+export const deleteComment = async (postId, commentId) => {
+  const response = await fetch(
+    BACKEND_DOMAIN + `/${postId}/comments/${commentId}`,
+    {
+      headers: getTokenHeader(),
+      method: "DELETE",
+    }
+  );
+
+  const parsed = await response.json();
+  console.log("parsed response from delete comment: " + JSON.stringify(parsed));
+
+  if (!response.ok) {
+    throw new Error(parsed.message);
+  }
+};
