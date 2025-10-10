@@ -32,4 +32,9 @@ const getAllFollows = async () => {
   console.log("All follows: " + JSON.stringify(follows));
 };
 
-getAllPosts();
+const getAllFollowRequests = async () => {
+  const followRequests = await prisma.followRequest.findMany();
+  console.log("All follow requests: " + JSON.stringify(followRequests));
+};
+
+getAllFollowRequests();

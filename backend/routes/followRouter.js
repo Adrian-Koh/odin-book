@@ -18,5 +18,6 @@ followRouter.post(
   verifyToken,
   followController.acceptFollowRequest
 );
+followRouter.get("/requests", verifyToken, followController.getFollowRequests);
 
 module.exports = followRouter;
