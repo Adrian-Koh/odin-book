@@ -40,9 +40,27 @@ const removeFollow = async (followerId, followingId) => {
   });
 };
 
+const getFollowRequestsReceived = async (userid) => {
+  await prisma.followRequest.findMany({
+    where: {
+      responderId: Number(userid),
+    },
+  });
+};
+
+const getFollowRequestsSent = async (userid) => {
+  await prisma.followRequest.findMany({
+    where: {
+      requesterId: Number(userid),
+    },
+  });
+};
+
 module.exports = {
   addFollowRequest,
   removeFollowRequest,
   addFollow,
   removeFollow,
+  getFollowRequestsReceived,
+  getFollowRequestsSent,
 };

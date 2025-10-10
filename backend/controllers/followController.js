@@ -1,38 +1,63 @@
-const usersQueries = require("../db/usersQueries");
 const followQueries = require("../db/followQueries");
 const jwt = require("jsonwebtoken");
-const {
-  generatePasswordHash,
-  validPassword,
-} = require("../utils/passwordUtils");
 
-async function postFollow(req, res, next) {
+async function createFollowRequest(req, res, next) {
   jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
     if (err) {
       return next(err);
     } else {
       const user = authData.user;
       const { followingId } = req.params;
-      await followQueries.addFollow(user.id, followingId);
-      res.json({ message: "follow success" });
+      await followQueries.addFollowRequest(user.id, followingId);
+      res.json({ message: "follow request added" });
     }
   });
 }
 
-async function deleteFollow(req, res, next) {
+async function acceptFollowRequest(req, res, next) {
   jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
     if (err) {
       return next(err);
     } else {
       const user = authData.user;
-      const { followingId } = req.params;
-      await followQueries.removeFollow(user.id, followingId);
-      res.json({ message: "unfollow success" });
+      const { followerId } = req.params;
+      await followQueries.addFollow(followerId, user.id);
+      await followQueries.removeFollowRequest(followerId, user.id);
+      res.json({ message: "follow request accepted" });
+    }
+  });
+}
+
+async function cancelFollowRequest(req, res, next) {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const { followerId } = req.params;
+      await followQueries.removeFollowRequest(followerId, user.id);
+      res.json({ message: "follow request cancelled" });
+    }
+  });
+}
+
+async function getFollowRequests(req, res, next) {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const received = await followQueries.getFollowRequestsReceived(user.id);
+      const sent = await followQueries.getFollowRequestsSent(user.id);
+
+      res.json({ received, sent });
     }
   });
 }
 
 module.exports = {
-  postFollow,
-  deleteFollow,
+  createFollowRequest,
+  acceptFollowRequest,
+  cancelFollowRequest,
+  getFollowRequests,
 };
