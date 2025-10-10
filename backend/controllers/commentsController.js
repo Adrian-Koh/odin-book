@@ -26,6 +26,11 @@ const editComment = async (req, res, next) => {
     } else {
       const { commentId } = req.params;
       const { comment } = req.body;
+
+      const authorId = await commentsQueries.getCommentAuthorId(commentId);
+      if (authorId !== authData.user.id)
+        return next(new Error("Cannot edit comment user did not create."));
+
       const updatedComment = await commentsQueries.editComment(
         commentId,
         comment
@@ -41,6 +46,11 @@ const deleteComment = async (req, res, next) => {
       return next(err);
     } else {
       const { commentId } = req.params;
+
+      const authorId = await commentsQueries.getCommentAuthorId(commentId);
+      if (authorId !== authData.user.id)
+        return next(new Error("Cannot delete comment user did not create."));
+
       await commentsQueries.deleteComment(commentId);
       res.json({ message: "successfully deleted comment" });
     }

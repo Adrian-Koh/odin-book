@@ -56,4 +56,19 @@ const getPostComments = async (postId) => {
   return comments;
 };
 
-module.exports = { createComment, editComment, deleteComment, getPostComments };
+const getCommentAuthorId = async (commentId) => {
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id: Number(commentId),
+    },
+  });
+  return comment.authorId;
+};
+
+module.exports = {
+  createComment,
+  editComment,
+  deleteComment,
+  getPostComments,
+  getCommentAuthorId,
+};
