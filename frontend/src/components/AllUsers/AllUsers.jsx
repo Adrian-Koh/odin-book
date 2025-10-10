@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./AllUsers.module.css";
-import { toggleFollowUser, getAllUsers } from "../../api/users";
+import { getAllUsers } from "../../api/users";
+import { toggleFollowUser } from "../../api/follow";
 import { HomeContext } from "../../pages/Home/Home";
 
 const AllUsers = () => {
