@@ -19,18 +19,20 @@ enum LoginMethod {
 }
 
 model User {
-  id                Int           @id @default(autoincrement())
+  id                Int               @id @default(autoincrement())
   displayName       String
   loginMethod       LoginMethod
-  email             String        @unique
-  githubId          String?       @unique
+  email             String            @unique
+  githubId          String?           @unique
   passwordHash      String?
   avatarUrl         String?
   posts             Post[]
   postsLiked        PostLike[]
   comments          Comment[]
-  following         Follow[]      @relation("Following")
-  followers         Follow[]      @relation("Follower")
+  following         Follow[]          @relation("Following")
+  followers         Follow[]          @relation("Follower")
+  pendingRequests   FollowRequest[]   @relation("Requester")
+  pendingResponses  FollowRequest[]   @relation("Responder")
 }
 
 model Post {
@@ -72,4 +74,13 @@ model Follow {
   followerId        Int
 
   @@id([followingId, followerId])
+}
+
+model FollowRequest {
+  requester         User          @relation("Requester", fields: [requesterId], references: [id])
+  requesterId       Int
+  responder         User          @relation("Responder", fields: [responderId], references: [id])
+  responderId       Int
+
+  @@id([requesterId, responderId])
 }

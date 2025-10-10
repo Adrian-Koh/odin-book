@@ -7,6 +7,7 @@ require("dotenv").config();
 const indexRouter = require("./routes/indexRouter");
 const authRouter = require("./routes/authRouter");
 const usersRouter = require("./routes/usersRouter");
+const followRouter = require("./routes/followRouter");
 const postsRouter = require("./routes/postsRouter");
 const commentsRouter = require("./routes/commentsRouter");
 
@@ -25,6 +26,7 @@ app.use(passport.initialize());
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
+app.use("/follow", followRouter);
 app.use("/posts", postsRouter);
 app.use("/posts", commentsRouter);
 

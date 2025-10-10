@@ -75,26 +75,6 @@ const getUserFollowing = async (userid) => {
   return followingUsers;
 };
 
-const addFollow = async (followerId, followingId) => {
-  await prisma.follow.create({
-    data: {
-      followerId: Number(followerId),
-      followingId: Number(followingId),
-    },
-  });
-};
-
-const removeFollow = async (followerId, followingId) => {
-  await prisma.follow.delete({
-    where: {
-      followingId_followerId: {
-        followerId: Number(followerId),
-        followingId: Number(followingId),
-      },
-    },
-  });
-};
-
 const updateProfilePic = async (userId, avatarUrl) => {
   const user = await prisma.user.update({
     where: { id: Number(userId) },
@@ -122,8 +102,6 @@ module.exports = {
   getUserById,
   getAllUsers,
   getUserFollowing,
-  addFollow,
-  removeFollow,
   updateProfilePic,
   updateDisplayName,
 };
