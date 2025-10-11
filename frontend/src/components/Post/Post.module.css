@@ -98,8 +98,10 @@
 }
 
 .liked {
-  filter: invert(20%) sepia(55%) saturate(7240%) hue-rotate(354deg)
-    brightness(93%) contrast(123%);
+  height: 25px;
+  width: auto;
+  filter: invert(37%) sepia(21%) saturate(3150%) hue-rotate(325deg)
+    brightness(88%) contrast(120%);
 }
 
 .likeIcon,

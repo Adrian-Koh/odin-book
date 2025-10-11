@@ -115,8 +115,12 @@ const Profile = () => {
             <>
               <img
                 src="/pencil.svg"
-                alt="edit profile pic"
-                className="actionIcon"
+                alt="edit name"
+                className={
+                  profileUser.avatarUrl
+                    ? `actionIcon`
+                    : `actionIcon ${styles.noPicEditName}`
+                }
                 onClick={() => setEditActiveField("name")}
               />
               {editActiveField === "name" ? (

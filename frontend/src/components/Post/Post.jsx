@@ -176,7 +176,7 @@ const Post = ({
             className={
               post.likes.filter((like) => like.likedBy.id === user.id).length >
               0
-                ? `${styles.likeIcon} ${styles.liked}`
+                ? `${styles.liked}`
                 : `${styles.likeIcon}`
             }
             onClick={() =>
