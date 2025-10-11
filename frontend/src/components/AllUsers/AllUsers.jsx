@@ -20,10 +20,8 @@ const AllUsers = () => {
   };
   const fetchFollowRequestsCb = async () => {
     const { received, sent } = await getFollowRequests();
-    if (received && received.length > 0)
-      setRequestsReceived(received.map((req) => req.requesterId));
-    if (sent && sent.length > 0)
-      setRequestsSent(sent.map((res) => res.responderId));
+    if (received) setRequestsReceived(received.map((req) => req.requesterId));
+    if (sent) setRequestsSent(sent.map((res) => res.responderId));
   };
   useEffect(() => {
     fetchUsersCb();
@@ -39,6 +37,7 @@ const AllUsers = () => {
 
   async function handleFollowRequest(userId, accept) {
     if (accept) await acceptFollowRequest(userId);
+    fetchFollowing();
     fetchFollowRequestsCb();
   }
 
@@ -63,64 +62,70 @@ const AllUsers = () => {
             ></img>
             <div className={styles.displayName}>{otherUser.displayName}</div>
             <div className={styles.email}>{otherUser.email}</div>
-            {following.filter((follow) => follow.followingId === otherUser.id)
-              .length > 0 ? (
-              // if logged in user is already following this other user
-              <button
-                className={styles.followingBtn}
-                onClick={() => handleFollowClick(otherUser.id, false)}
-              >
-                <img
-                  src="/check.svg"
-                  alt="unfollow"
-                  className={styles.followingIcon}
-                />
-                Following
-              </button>
-            ) : (
-              // if logged in user is NOT following this other user
-              <button
-                className={styles.followBtn}
-                onClick={() => {
-                  if (requestsReceived.includes(otherUser.id))
-                    handleFollowRequest(otherUser.id, true);
-                  else if (requestsSent.includes(otherUser.id))
-                    handleFollowRequest(otherUser.id, false);
-                  else handleFollowClick(otherUser.id, true);
-                }}
-              >
-                {requestsReceived.includes(otherUser.id) ? (
-                  // if other user sent a follow request to logged in user
+            <div className={styles.buttons}>
+              {following.filter((follow) => follow.followingId === otherUser.id)
+                .length > 0 ? (
+                // if logged in user is already following this other user
+                <button
+                  className={styles.followingBtn}
+                  onClick={() => handleFollowClick(otherUser.id, false)}
+                >
+                  <img
+                    src="/check.svg"
+                    alt="unfollow"
+                    className={styles.followingIcon}
+                  />
+                  Following
+                </button>
+              ) : (
+                // if logged in user is NOT following this other user
+                <button
+                  className={styles.followBtn}
+                  onClick={() => {
+                    if (requestsSent.includes(otherUser.id))
+                      handleFollowRequest(otherUser.id, false);
+                    else handleFollowClick(otherUser.id, true);
+                  }}
+                >
+                  {requestsSent.includes(otherUser.id) ? (
+                    // if logged in user sent a follow request to other user
+                    <>
+                      <img
+                        src="/clock-outline.svg"
+                        alt="pending"
+                        className={styles.sentRequestIcon}
+                      />
+                      Follow request sent
+                    </>
+                  ) : (
+                    <>
+                      <img
+                        src="/plus.svg"
+                        alt="follow"
+                        className={styles.followIcon}
+                      />
+                      Follow
+                    </>
+                  )}
+                </button>
+              )}
+              {requestsReceived.includes(otherUser.id) ? (
+                // if other user sent a follow request to logged in user
+                <button
+                  className={styles.acceptFollowBtn}
+                  onClick={() => handleFollowRequest(otherUser.id, true)}
+                >
                   <>
                     <img
                       src="/check.svg"
                       alt="accept"
-                      className={styles.followIcon} // todo: use other class name
+                      className={styles.acceptFollowIcon}
                     />
                     Accept follow request
                   </>
-                ) : requestsSent.includes(otherUser.id) ? (
-                  // if logged in user sent a follow request to other user
-                  <>
-                    <img
-                      src="/clock-outline.svg"
-                      alt="pending"
-                      className={styles.followIcon} // todo: use other class name
-                    />
-                    Follow request sent
-                  </>
-                ) : (
-                  <>
-                    <img
-                      src="/plus.svg"
-                      alt="follow"
-                      className={styles.followIcon}
-                    />
-                    Follow
-                  </>
-                )}
-              </button>
-            )}
+                </button>
+              ) : null}
+            </div>
           </div>
         ))}
       </div>

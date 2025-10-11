@@ -83,7 +83,7 @@ export default function Home() {
             <FollowingUsers className={styles.followingUsers} />
           </>
         ) : (
-          <p>
+          <p className={styles.loggedOutMessage}>
             Welcome to Odinbook! Please log in or sign up to interact with the
             world.
           </p>

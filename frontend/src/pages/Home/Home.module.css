@@ -19,7 +19,6 @@
 
 .navBar {
   grid-column: 1 / 2;
-  width: 90%;
   padding: 5px 5px 10px 5px;
   font-size: 1.2rem;
   position: fixed;
@@ -53,6 +52,10 @@
   height: 90%;
 }
 
+.loggedOutMessage {
+  grid-column: 2 / 3;
+}
+
 .followingUsers {
   grid-column: 3 / 4;
 }
@@ -81,4 +84,6 @@
   width: 30px;
   height: auto;
   border-radius: var(--border-radius);
+  filter: invert(99%) sepia(4%) saturate(14%) hue-rotate(67deg) brightness(104%)
+    contrast(100%);
 }

@@ -3,7 +3,10 @@ const BACKEND_DOMAIN = "http://localhost:8000/follow";
 
 export const toggleFollowUser = async (userId, follow) => {
   const method = follow ? "POST" : "DELETE";
-  const response = await fetch(BACKEND_DOMAIN + "/" + userId, {
+  const link = follow
+    ? BACKEND_DOMAIN + "/requests/" + userId
+    : BACKEND_DOMAIN + "/" + userId;
+  const response = await fetch(link, {
     headers: getTokenHeader(),
     method: method,
   });
@@ -19,7 +22,7 @@ export const toggleFollowUser = async (userId, follow) => {
 };
 
 export const acceptFollowRequest = async (userId) => {
-  const response = await fetch(BACKEND_DOMAIN + "/accept/" + userId, {
+  const response = await fetch(BACKEND_DOMAIN + "/requests/accept/" + userId, {
     headers: getTokenHeader(),
     method: "POST",
   });
