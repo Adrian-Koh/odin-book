@@ -34,8 +34,8 @@ async function cancelFollowRequest(req, res, next) {
       return next(err);
     } else {
       const user = authData.user;
-      const { followerId } = req.params;
-      await followQueries.removeFollowRequest(followerId, user.id);
+      const { followingId } = req.params;
+      await followQueries.removeFollowRequest(user.id, followingId);
       res.json({ message: "follow request cancelled" });
     }
   });
