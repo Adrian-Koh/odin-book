@@ -4,7 +4,7 @@ import { getAllUsers } from "../../api/users";
 import {
   toggleFollowUser,
   getFollowRequests,
-  acceptFollowRequest,
+  toggleFollowRequest,
 } from "../../api/follow";
 import { HomeContext } from "../../pages/Home/Home";
 
@@ -36,7 +36,7 @@ const AllUsers = () => {
   }
 
   async function handleFollowRequest(userId, accept) {
-    if (accept) await acceptFollowRequest(userId);
+    await toggleFollowRequest(userId, accept);
     fetchFollowing();
     fetchFollowRequestsCb();
   }

@@ -21,15 +21,18 @@ export const toggleFollowUser = async (userId, follow) => {
   }
 };
 
-export const acceptFollowRequest = async (userId) => {
-  const response = await fetch(BACKEND_DOMAIN + "/requests/accept/" + userId, {
+export const toggleFollowRequest = async (userId, accept) => {
+  const baseLink = BACKEND_DOMAIN + "/requests/";
+  const link = accept ? baseLink + "accept/" + userId : baseLink + userId;
+  const method = accept ? "POST" : "DELETE";
+  const response = await fetch(link, {
     headers: getTokenHeader(),
-    method: "POST",
+    method: method,
   });
 
   const parsed = await response.json();
   console.log(
-    "parsed response from accept follow request: " + JSON.stringify(parsed)
+    "parsed response from toggle follow request: " + JSON.stringify(parsed)
   );
 
   if (!response.ok) {
