@@ -4,20 +4,25 @@ const followController = require("../controllers/followController");
 const verifyToken = require("../utils/jwtUtils");
 
 followRouter.post(
-  "/:followingId",
+  "/requests/:followingId",
   verifyToken,
   followController.createFollowRequest
 );
 followRouter.delete(
-  "/:followingId",
+  "/requests/:followingId",
   verifyToken,
   followController.cancelFollowRequest
 );
 followRouter.post(
-  "/accept/:followerId",
+  "/requests/accept/:followerId",
   verifyToken,
   followController.acceptFollowRequest
 );
 followRouter.get("/requests", verifyToken, followController.getFollowRequests);
+followRouter.delete(
+  "/:followingId",
+  verifyToken,
+  followController.deleteFollow
+);
 
 module.exports = followRouter;

@@ -55,9 +55,23 @@ async function getFollowRequests(req, res, next) {
   });
 }
 
+async function deleteFollow(req, res, next) {
+  jwt.verify(req.token, process.env.SECRET_KEY, async (err, authData) => {
+    if (err) {
+      return next(err);
+    } else {
+      const user = authData.user;
+      const { followingId } = req.params;
+      await followQueries.removeFollow(user.id, followingId);
+      res.json({ message: "unfollow success" });
+    }
+  });
+}
+
 module.exports = {
   createFollowRequest,
   acceptFollowRequest,
   cancelFollowRequest,
   getFollowRequests,
+  deleteFollow,
 };
