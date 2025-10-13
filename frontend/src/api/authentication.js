@@ -1,4 +1,4 @@
-const BACKEND_DOMAIN = "http://localhost:8000";
+const BACKEND_DOMAIN = "https://odin-book-rgeb.onrender.com";
 
 export const submitSignupEmail = async (email, password, name, file) => {
   const formData = new FormData();

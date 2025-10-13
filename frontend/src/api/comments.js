@@ -1,5 +1,5 @@
 import { getTokenHeader } from "../utils/tokenUtils";
-const BACKEND_DOMAIN = "http://localhost:8000/posts";
+const BACKEND_DOMAIN = "https://odin-book-rgeb.onrender.com/posts";
 
 export const submitComment = async (postId, comment) => {
   const response = await fetch(BACKEND_DOMAIN + `/${postId}/comments`, {

@@ -1,5 +1,5 @@
 import { getTokenHeader } from "../utils/tokenUtils";
-const BACKEND_DOMAIN = "http://localhost:8000/users/profile";
+const BACKEND_DOMAIN = "https://odin-book-rgeb.onrender.com/users/profile";
 
 export const submitProfilePic = async (file) => {
   const formData = new FormData();

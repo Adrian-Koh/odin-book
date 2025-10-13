@@ -1,5 +1,5 @@
 import { getTokenHeader } from "../utils/tokenUtils";
-const BACKEND_DOMAIN = "http://localhost:8000/users";
+const BACKEND_DOMAIN = "https://odin-book-rgeb.onrender.com/users";
 
 export const getFollowingUsers = async () => {
   const response = await fetch(BACKEND_DOMAIN + "/following", {

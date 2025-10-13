@@ -1,5 +1,5 @@
 import { getTokenHeader } from "../utils/tokenUtils";
-const BACKEND_DOMAIN = "http://localhost:8000/follow";
+const BACKEND_DOMAIN = "https://odin-book-rgeb.onrender.com/follow";
 
 export const toggleFollowUser = async (userId, follow) => {
   const method = follow ? "POST" : "DELETE";

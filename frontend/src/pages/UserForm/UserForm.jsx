@@ -98,7 +98,7 @@ const UserForm = ({ action }) => {
           </form>
           <a
             className={styles.githubLink}
-            href="http://localhost:8000/auth/github"
+            href="https://odin-book-rgeb.onrender.com/auth/github"
           >
             <img src="/github.svg" alt="Github" className={styles.githubIcon} />
             {title} with GitHub
