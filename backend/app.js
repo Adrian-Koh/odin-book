@@ -4,7 +4,6 @@ const cors = require("cors");
 const passport = require("passport");
 require("dotenv").config();
 
-const indexRouter = require("./routes/indexRouter");
 const authRouter = require("./routes/authRouter");
 const usersRouter = require("./routes/usersRouter");
 const followRouter = require("./routes/followRouter");
@@ -23,7 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 require("./utils/passport");
 app.use(passport.initialize());
 
-app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/users", usersRouter);
 app.use("/follow", followRouter);
