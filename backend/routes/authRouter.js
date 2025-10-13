@@ -2,7 +2,7 @@ const { Router } = require("express");
 const authRouter = Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const REDIRECT_URL = "http://localhost:5173";
+const REDIRECT_URL = "https://ak-odinbook.netlify.app";
 
 authRouter.get(
   "/github",

@@ -12,7 +12,7 @@ const postsRouter = require("./routes/postsRouter");
 const commentsRouter = require("./routes/commentsRouter");
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://ak-odinbook.netlify.app",
   optionsSuccessStatus: 200,
 };
 
